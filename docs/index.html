@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>halfFull</title>
+  <meta name="description" content="The macOS hotkey for Japanese forms that demand full-width input. Press ⌥F." />
+  <meta property="og:title" content="halfFull" />
+  <meta property="og:description" content="The macOS hotkey for Japanese forms that demand full-width input." />
+  <meta property="og:image" content="assets/icon-1024.png" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="assets/icon-256.png" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/icon-256.png" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <main>
+    <img src="assets/icon-256.png" alt="" width="128" height="128" class="icon" />
+    <h1>halfFull</h1>
+
+    <p class="tagline lang-en"><span class="kbd-line"><kbd>⌥</kbd><kbd>F</kbd></span>　<span class="hw">Press once.</span>　<span class="fw">Ｗｉｄｔｈ-ｃｏｒｒｅｃｔ．</span></p>
+    <p class="tagline lang-zh">按一下 <kbd>⌥</kbd><kbd>F</kbd>，半角立刻全角。</p>
+    <p class="tagline lang-ja"><kbd>⌥</kbd><kbd>F</kbd> で、半角を全角に。</p>
+
+    <!-- Mock form fields — left rejects half-width, right accepts full-width.
+         This is the actual product moment: filling a Japanese site that demands
+         "全角で入力してください" and not wanting to retype the whole field by hand.
+         Two example pairs so non-CJK readers see the effect on Latin text too. -->
+    <section class="forms" aria-label="Demo: Japanese form fields before and after halfFull">
+      <!-- Pair 1: Katakana name — the classic case. -->
+      <div class="form bad">
+        <div class="row">
+          <label>氏名（カナ）<span class="req">必須</span></label>
+          <div class="field" data-state="error">
+            <input type="text" value="ﾔﾏﾀﾞ ﾀﾛｳ" readonly aria-invalid="true">
+          </div>
+          <p class="msg error">⚠ 全角カタカナで入力してください</p>
+        </div>
+      </div>
+      <div class="form good">
+        <div class="row">
+          <label>氏名（カナ）<span class="req">必須</span></label>
+          <div class="field" data-state="ok">
+            <input type="text" value="ヤマダ タロウ" readonly>
+          </div>
+          <p class="msg ok">✓ OK</p>
+        </div>
+      </div>
+
+      <!-- Pair 2: Romaji name in Latin — for English-script readers the
+           wide-vs-narrow contrast is unmistakable. Real, common scenario:
+           visa applications, embassy forms, international wire transfer
+           recipient fields, some passport-renewal portals — anywhere
+           Japanese institutional systems still demand 全角英字 for the
+           Latin spelling of a name. -->
+      <div class="form bad">
+        <div class="row">
+          <label>氏名（ローマ字）<span class="req">必須</span></label>
+          <div class="field" data-state="error">
+            <input type="text" value="TARO YAMADA" readonly aria-invalid="true">
+          </div>
+          <p class="msg error">⚠ 全角ローマ字で入力してください</p>
+        </div>
+      </div>
+      <div class="form good">
+        <div class="row">
+          <label>氏名（ローマ字）<span class="req">必須</span></label>
+          <div class="field" data-state="ok">
+            <input type="text" value="ＴＡＲＯ　ＹＡＭＡＤＡ" readonly>
+          </div>
+          <p class="msg ok">✓ OK</p>
+        </div>
+      </div>
+    </section>
+
+    <a class="download" href="https://github.com/taresky/halffull/releases">Download for macOS</a>
+
+    <footer>
+      <span>macOS 13+</span>
+      <span aria-hidden="true">·</span>
+      <a href="https://github.com/taresky/halffull">Source</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://x.com/taresky">@taresky</a>
+      <span aria-hidden="true">·</span>
+      <a href="https://github.com/taresky/halffull/blob/main/LICENSE">Free for personal use</a>
+    </footer>
+  </main>
+
+</body>
+</html>

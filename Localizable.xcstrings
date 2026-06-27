@@ -1,0 +1,377 @@
+{
+  "sourceLanguage" : "en",
+  "version" : "1.0",
+  "strings" : {
+    "about.copyright" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "© 2026 Taresky. PolyForm Noncommercial 1.0.0." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "© 2026 Taresky · PolyForm Noncommercial 1.0.0" } }
+      }
+    },
+    "about.tagline" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "A tiny menu-bar utility for switching text between half-width and full-width forms." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "一个小巧的菜单栏工具，用于在半角与全角文本之间快速切换。" } }
+      }
+    },
+    "about.version" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Version %@ (%@)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "版本 %@（%@）" } }
+      }
+    },
+    "direction.smart" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Smart (auto)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "智能（自动判断）" } }
+      }
+    },
+    "direction.toFullWidth" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Half → Full-width" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "半角 → 全角" } }
+      }
+    },
+    "direction.toHalfWidth" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Full → Half-width" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "全角 → 半角" } }
+      }
+    },
+    "hotkey.recordButton" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Record" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "录制" } }
+      }
+    },
+    "hotkey.recordingButton" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Press a key…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "按下按键…" } }
+      }
+    },
+    "hotkey.reset" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Reset" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重置" } }
+      }
+    },
+    "menu.about" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "About halfFull" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "关于 halfFull" } }
+      }
+    },
+    "menu.convert" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Convert (%@)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "转换（%@）" } }
+      }
+    },
+    "menu.defaultDirection" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Default direction" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "默认方向" } }
+      }
+    },
+    "menu.forceFullWidth" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Force half → full-width" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "强制：半角 → 全角" } }
+      }
+    },
+    "menu.forceHalfWidth" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Force full → half-width" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "强制：全角 → 半角" } }
+      }
+    },
+    "menu.preferences" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Preferences…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "偏好设置…" } }
+      }
+    },
+    "menu.quit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Quit" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "退出" } }
+      }
+    },
+    "menu.scope" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Scope" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "转换范围" } }
+      }
+    },
+    "notify.noChangeBody" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Text already matches the target form." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "文本已经是目标形态了。" } }
+      }
+    },
+    "notify.noChangeTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Nothing changed" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "无需转换" } }
+      }
+    },
+    "notify.nothingBody" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Make sure a text field is focused." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "请确保已聚焦在文本框上。" } }
+      }
+    },
+    "notify.nothingTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Nothing to convert" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "没有可转换的内容" } }
+      }
+    },
+    "notify.permissionBody" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Grant access in System Settings → Privacy & Security → Accessibility." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "请在「系统设置 → 隐私与安全 → 辅助功能」中授权。" } }
+      }
+    },
+    "notify.permissionTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Accessibility permission required" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "需要辅助功能权限" } }
+      }
+    },
+    "onboarding.finish" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Done" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "完成" } }
+      }
+    },
+    "onboarding.hotkey.detail" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Press the shortcut below in any text field. You can change it later in Preferences." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "在任意输入框中按下以下快捷键即可触发转换；之后可在偏好设置中修改。" } }
+      }
+    },
+    "onboarding.hotkey.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Your global hotkey" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "全局快捷键" } }
+      }
+    },
+    "onboarding.openSettings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open System Settings" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "打开系统设置" } }
+      }
+    },
+    "onboarding.permission.granted" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Permission granted — you're all set." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已授权，可以开始使用。" } }
+      }
+    },
+    "onboarding.permission.needed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Required to simulate ⌘A / ⌘C / ⌘V in other apps." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "需要权限以在其他 App 中模拟 ⌘A / ⌘C / ⌘V。" } }
+      }
+    },
+    "onboarding.permission.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Accessibility access" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "辅助功能权限" } }
+      }
+    },
+    "onboarding.subtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Convert text in any app to full-width (or back) with one keystroke." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "在任意 App 中按一次快捷键，即可把文本切换为全角（或还原）。" } }
+      }
+    },
+    "onboarding.welcome" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Welcome to %@" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "欢迎使用 %@" } }
+      }
+    },
+    "prefs.convertSpace" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Convert space to ideographic (U+3000)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "把空格也转换为全角空格（U+3000）" } }
+      }
+    },
+    "prefs.direction" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Default direction" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "默认方向" } }
+      }
+    },
+    "prefs.hotkey.intro" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Press the keys you want to bind. Must include ⌘, ⌃, or ⌥." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "按下需要绑定的按键组合，必须包含 ⌘、⌃ 或 ⌥。" } }
+      }
+    },
+    "prefs.hotkey.note" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "The hotkey works system-wide while halfFull is running." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "只要 halfFull 在运行，快捷键就会全局生效。" } }
+      }
+    },
+    "prefs.launchAtLogin" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Launch at login" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "开机自动启动" } }
+      }
+    },
+    "prefs.notifications" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Show notifications" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "显示通知" } }
+      }
+    },
+    "prefs.playSound" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Play sound on success" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "转换成功时播放提示音" } }
+      }
+    },
+    "prefs.restoreClipboard" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Restore clipboard after conversion" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "转换后恢复剪贴板内容" } }
+      }
+    },
+    "prefs.scope" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Scope" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "转换范围" } }
+      }
+    },
+    "prefs.section.behavior" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Behavior" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "行为" } }
+      }
+    },
+    "prefs.section.conversion" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Conversion" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "转换设置" } }
+      }
+    },
+    "prefs.tab.about" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "About" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "关于" } }
+      }
+    },
+    "prefs.tab.general" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "General" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "通用" } }
+      }
+    },
+    "prefs.tab.hotkey" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Hotkey" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "快捷键" } }
+      }
+    },
+    "scope.all" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Everything" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "全部字符" } }
+      }
+    },
+    "scope.alphanumeric" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Letters & digits only" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "仅字母与数字" } }
+      }
+    },
+    "scope.punctuation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Punctuation only" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "仅标点符号" } }
+      }
+    },
+    "statusbar.tooltip" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "halfFull — convert text width" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "halfFull — 切换文本宽度" } }
+      }
+    },
+    "window.about" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "About" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "关于" } }
+      }
+    },
+    "window.preferences" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Preferences" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "偏好设置" } }
+      }
+    },
+    "window.welcome" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Welcome" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "欢迎" } }
+      }
+    }
+  }
+}

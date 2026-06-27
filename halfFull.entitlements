@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!--
+        We deliberately do NOT enable the app sandbox: simulating ⌘C/⌘V into
+        another process's text field is a sandbox-forbidden operation.
+        Distribution via direct download (not the Mac App Store) is the trade-off.
+    -->
+    <key>com.apple.security.app-sandbox</key>
+    <false/>
+</dict>
+</plist>

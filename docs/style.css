@@ -1,0 +1,218 @@
+/* halfFull landing — show the exact moment the product matters: a Japanese
+   form rejecting half-width katakana. Everything else is supporting cast. */
+
+:root {
+  --ink:       #0E1320;
+  --ink-soft:  #5B6377;
+  --ink-faint: #9098A8;
+  --paper:     #FAFAFB;
+  --card:      #FFFFFF;
+  --line:      #E8E9EE;
+
+  --amber:     #E47118;
+  --amber-2:   #FFA951;
+  --error:     #D03030;
+  --error-bg:  #FFF1F0;
+  --ok:        #1F8E4D;
+  --ok-bg:     #EAF7EF;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink:       #ECEEF6;
+    --ink-soft:  #A4ABC0;
+    --ink-faint: #7B8398;
+    --paper:     #0E1320;
+    --card:      #1A2034;
+    --line:      #2A3151;
+    --error-bg:  rgba(208, 48, 48, 0.12);
+    --ok-bg:     rgba(31, 142, 77, 0.12);
+  }
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue",
+               "PingFang SC", "Hiragino Sans GB", "Hiragino Kaku Gothic ProN", sans-serif;
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* Background: two soft radial colour washes (warm top-left, cool bottom-right)
+   on top of the paper base, giving a faint mesh-gradient depth without competing
+   with the content. The blobs are fixed so they don't scroll out of view. */
+body {
+  background:
+    radial-gradient(60% 50% at 12% 8%,   rgba(255, 178, 124, 0.16), transparent 70%),
+    radial-gradient(55% 45% at 88% 92%,  rgba(146, 168, 232, 0.14), transparent 70%),
+    var(--paper);
+  background-attachment: fixed;
+}
+@media (prefers-color-scheme: dark) {
+  body {
+    background:
+      radial-gradient(60% 50% at 12% 8%,   rgba(255, 178, 124, 0.10), transparent 70%),
+      radial-gradient(55% 45% at 88% 92%,  rgba(120, 145, 220, 0.12), transparent 70%),
+      var(--paper);
+    background-attachment: fixed;
+  }
+}
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 96px 24px 64px;
+  text-align: center;
+}
+
+.icon {
+  width: 128px; height: 128px;
+  border-radius: 28px;
+  box-shadow: 0 12px 32px -16px rgba(14, 19, 32, 0.25);
+  margin: 0 auto 24px;
+  display: block;
+}
+
+h1 {
+  font-size: 52px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 20px;
+  line-height: 1;
+}
+
+/* Three taglines stacked — EN / ZH / JA. The EN one is full-width as a
+   little visual proof of what the product produces. */
+
+.tagline {
+  font-size: 17px;
+  color: var(--ink-soft);
+  margin: 0 0 6px;
+  line-height: 1.5;
+}
+.tagline:last-of-type { margin-bottom: 40px; }
+.tagline.lang-en { color: var(--ink); font-weight: 500; }
+.kbd-line { margin-right: 4px; }
+/* Halfwidth/fullwidth visual contrast in the EN tagline — the line itself
+   visually demonstrates what the product does to your text.
+   Half-width = "the problem" (de-emphasized); full-width = "the result" (emphasized). */
+.tagline .hw { color: var(--ink-faint); }
+.tagline .fw { color: var(--ink); margin-left: 4px; }
+
+kbd {
+  display: inline-block;
+  font: 600 0.88em/1 -apple-system, "SF Mono", Menlo, monospace;
+  padding: 2px 7px;
+  margin: 0 1px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  color: var(--ink);
+  vertical-align: 1px;
+}
+
+/* Form demo cards. Mimicking a real Japanese form (label above, required tag,
+   border state on the field, validation message under). */
+
+.forms {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 0 0 40px;
+  text-align: left;
+}
+@media (max-width: 560px) {
+  .forms { grid-template-columns: 1fr; }
+}
+
+.form {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.row label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 10px;
+  letter-spacing: 0.01em;
+}
+.row .req {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: 600;
+  color: white;
+  background: var(--ink-faint);
+  border-radius: 3px;
+  vertical-align: 1px;
+}
+
+.field {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0;
+  transition: border-color 0.15s ease;
+}
+.field input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 10px 12px;
+  font: 16px/1.2 "Hiragino Kaku Gothic ProN", "Hiragino Sans GB",
+                -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--ink);
+  outline: none;
+  border-radius: 8px;
+}
+.field[data-state="error"] { border-color: var(--error); background: var(--error-bg); }
+.field[data-state="ok"]    { border-color: var(--ok);    background: var(--ok-bg); }
+
+.msg {
+  margin: 8px 0 0;
+  font-size: 13px;
+  font-family: "Hiragino Kaku Gothic ProN", -apple-system, BlinkMacSystemFont, sans-serif;
+}
+.msg.error { color: var(--error); font-weight: 500; }
+.msg.ok    { color: var(--ok);    font-weight: 500; }
+
+/* Single CTA. Amber gradient, matches the .icns icon. */
+
+.download {
+  display: inline-block;
+  padding: 14px 32px;
+  background: linear-gradient(180deg, var(--amber-2), var(--amber));
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 8px 20px -8px rgba(228, 113, 24, 0.5);
+  transition: transform 0.05s ease, box-shadow 0.15s ease;
+}
+.download:hover  { box-shadow: 0 12px 28px -8px rgba(228, 113, 24, 0.6); }
+.download:active { transform: scale(0.98); }
+
+footer {
+  margin: 48px 0 0;
+  font-size: 13px;
+  color: var(--ink-faint);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+footer a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+footer a:hover { border-bottom-color: var(--ink-soft); }

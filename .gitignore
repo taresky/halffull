@@ -1,0 +1,61 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+*.xcuserdatad/
+xcuserdata/
+*.xccheckout
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Xcode Patch (Xcode 11+)
+*.xcodeproj/xcshareddata/IDEWorkspaceChecks.plist
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+
+# Swift Package Manager
+.swiftpm/
+.build/
+Packages/
+Package.pins
+Package.resolved
+*.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/
+
+# Cloudflare Wrangler (local deploy cache — may contain account metadata)
+.wrangler/
+
+# CocoaPods (unused, defensive)
+Pods/
+
+# Carthage (unused, defensive)
+Carthage/Build/
+
+# Fastlane (unused, defensive)
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Backups
+*.bak
+*~
+
+# Local archives
+*.app.zip
+*.dmg
+
+# Editor caches
+.idea/
+.vscode/
+*.swp
+*.swo

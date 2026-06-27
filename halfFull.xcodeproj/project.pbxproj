@@ -1,0 +1,518 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8A12345601234567A0000020 /* halfFullApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000020 /* halfFullApp.swift */; };
+		8A12345601234567A0000021 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000021 /* StatusBarController.swift */; };
+		8A12345601234567A0000022 /* ConversionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000022 /* ConversionController.swift */; };
+		8A12345601234567A0000023 /* ConversionEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000023 /* ConversionEngine.swift */; };
+		8A12345601234567A0000024 /* KeyCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000024 /* KeyCode.swift */; };
+		8A12345601234567A0000025 /* KeyboardSimulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000025 /* KeyboardSimulator.swift */; };
+		8A12345601234567A0000026 /* PasteboardArbiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000026 /* PasteboardArbiter.swift */; };
+		8A12345601234567A0000027 /* AccessibilityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000027 /* AccessibilityHelper.swift */; };
+		8A12345601234567A0000028 /* HotKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000028 /* HotKeyManager.swift */; };
+		8A12345601234567A0000029 /* LaunchAtLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000029 /* LaunchAtLoginManager.swift */; };
+		8A12345601234567A000002A /* NotificationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A123456012345670000002A /* NotificationPresenter.swift */; };
+		8A12345601234567A000002B /* PreferencesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A123456012345670000002B /* PreferencesStore.swift */; };
+		8A12345601234567A000002C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A123456012345670000002C /* MainView.swift */; };
+		8A12345601234567A000002D /* HotKeyRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A123456012345670000002D /* HotKeyRecorderView.swift */; };
+		8A12345601234567A000002E /* FocusInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A123456012345670000002E /* FocusInspector.swift */; };
+		8A12345601234567A000002F /* WindowControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A123456012345670000002F /* WindowControllers.swift */; };
+		8A12345601234567A0000040 /* AXTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000040 /* AXTextEditor.swift */; };
+		8A12345601234567B0000030 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000030 /* Assets.xcassets */; };
+		8A12345601234567B0000031 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000031 /* Localizable.xcstrings */; };
+		8A12345601234567B0000032 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000032 /* Preview Assets.xcassets */; };
+		8A12345601234567A0000050 /* ConversionEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000050 /* ConversionEngineTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8A1234560123456700000801 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8A1234560123456700000500 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8A1234560123456700000400;
+			remoteInfo = halfFull;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		8A1234560123456700000001 /* halfFull.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = halfFull.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A1234560123456700000002 /* halfFullTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = halfFullTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A1234560123456700000010 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8A1234560123456700000011 /* halfFull.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = halfFull.entitlements; sourceTree = "<group>"; };
+		8A1234560123456700000020 /* halfFullApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = halfFullApp.swift; sourceTree = "<group>"; };
+		8A1234560123456700000021 /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
+		8A1234560123456700000022 /* ConversionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionController.swift; sourceTree = "<group>"; };
+		8A1234560123456700000023 /* ConversionEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionEngine.swift; sourceTree = "<group>"; };
+		8A1234560123456700000024 /* KeyCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCode.swift; sourceTree = "<group>"; };
+		8A1234560123456700000025 /* KeyboardSimulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardSimulator.swift; sourceTree = "<group>"; };
+		8A1234560123456700000026 /* PasteboardArbiter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteboardArbiter.swift; sourceTree = "<group>"; };
+		8A1234560123456700000027 /* AccessibilityHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityHelper.swift; sourceTree = "<group>"; };
+		8A1234560123456700000028 /* HotKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyManager.swift; sourceTree = "<group>"; };
+		8A1234560123456700000029 /* LaunchAtLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginManager.swift; sourceTree = "<group>"; };
+		8A123456012345670000002A /* NotificationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPresenter.swift; sourceTree = "<group>"; };
+		8A123456012345670000002B /* PreferencesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesStore.swift; sourceTree = "<group>"; };
+		8A123456012345670000002C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		8A123456012345670000002D /* HotKeyRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyRecorderView.swift; sourceTree = "<group>"; };
+		8A123456012345670000002E /* FocusInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusInspector.swift; sourceTree = "<group>"; };
+		8A123456012345670000002F /* WindowControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowControllers.swift; sourceTree = "<group>"; };
+		8A1234560123456700000040 /* AXTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXTextEditor.swift; sourceTree = "<group>"; };
+		8A1234560123456700000030 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8A1234560123456700000031 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		8A1234560123456700000032 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		8A1234560123456700000050 /* ConversionEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionEngineTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8A1234560123456700000302 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8A1234560123456700000311 /* Frameworks (Tests) */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8A1234560123456700000200 = {
+			isa = PBXGroup;
+			children = (
+				8A1234560123456700000220 /* App */,
+				8A1234560123456700000221 /* Core */,
+				8A1234560123456700000222 /* System */,
+				8A1234560123456700000223 /* UI */,
+				8A1234560123456700000224 /* Resources */,
+				8A1234560123456700000225 /* Tests */,
+				8A1234560123456700000204 /* Preview Content */,
+				8A1234560123456700000202 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8A1234560123456700000202 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8A1234560123456700000001 /* halfFull.app */,
+				8A1234560123456700000002 /* halfFullTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8A1234560123456700000204 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				8A1234560123456700000032 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		8A1234560123456700000220 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				8A1234560123456700000020 /* halfFullApp.swift */,
+				8A1234560123456700000021 /* StatusBarController.swift */,
+				8A1234560123456700000022 /* ConversionController.swift */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		8A1234560123456700000221 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				8A1234560123456700000023 /* ConversionEngine.swift */,
+				8A1234560123456700000024 /* KeyCode.swift */,
+				8A1234560123456700000025 /* KeyboardSimulator.swift */,
+				8A1234560123456700000026 /* PasteboardArbiter.swift */,
+				8A1234560123456700000040 /* AXTextEditor.swift */,
+				8A123456012345670000002E /* FocusInspector.swift */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		8A1234560123456700000222 /* System */ = {
+			isa = PBXGroup;
+			children = (
+				8A1234560123456700000027 /* AccessibilityHelper.swift */,
+				8A1234560123456700000028 /* HotKeyManager.swift */,
+				8A1234560123456700000029 /* LaunchAtLoginManager.swift */,
+				8A123456012345670000002A /* NotificationPresenter.swift */,
+				8A123456012345670000002B /* PreferencesStore.swift */,
+			);
+			name = System;
+			sourceTree = "<group>";
+		};
+		8A1234560123456700000223 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				8A123456012345670000002C /* MainView.swift */,
+				8A123456012345670000002D /* HotKeyRecorderView.swift */,
+				8A123456012345670000002F /* WindowControllers.swift */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		8A1234560123456700000224 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8A1234560123456700000030 /* Assets.xcassets */,
+				8A1234560123456700000031 /* Localizable.xcstrings */,
+				8A1234560123456700000010 /* Info.plist */,
+				8A1234560123456700000011 /* halfFull.entitlements */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		8A1234560123456700000225 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				8A1234560123456700000050 /* ConversionEngineTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8A1234560123456700000400 /* halfFull */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8A1234560123456700000701 /* Build configuration list for PBXNativeTarget "halfFull" */;
+			buildPhases = (
+				8A1234560123456700000300 /* Sources */,
+				8A1234560123456700000302 /* Frameworks */,
+				8A1234560123456700000301 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = halfFull;
+			productName = halfFull;
+			productReference = 8A1234560123456700000001 /* halfFull.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8A1234560123456700000401 /* halfFullTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8A1234560123456700000702 /* Build configuration list for PBXNativeTarget "halfFullTests" */;
+			buildPhases = (
+				8A1234560123456700000310 /* Sources (Tests) */,
+				8A1234560123456700000311 /* Frameworks (Tests) */,
+				8A1234560123456700000312 /* Resources (Tests) */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8A1234560123456700000802 /* PBXTargetDependency */,
+			);
+			name = halfFullTests;
+			productName = halfFullTests;
+			productReference = 8A1234560123456700000002 /* halfFullTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8A1234560123456700000500 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					8A1234560123456700000400 = { CreatedOnToolsVersion = 15.0; };
+					8A1234560123456700000401 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = 8A1234560123456700000400;
+					};
+				};
+			};
+			buildConfigurationList = 8A1234560123456700000700 /* Build configuration list for PBXProject "halfFull" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				"zh-Hans",
+			);
+			mainGroup = 8A1234560123456700000200;
+			productRefGroup = 8A1234560123456700000202 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8A1234560123456700000400 /* halfFull */,
+				8A1234560123456700000401 /* halfFullTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8A1234560123456700000301 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A12345601234567B0000030 /* Assets.xcassets in Resources */,
+				8A12345601234567B0000031 /* Localizable.xcstrings in Resources */,
+				8A12345601234567B0000032 /* Preview Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8A1234560123456700000312 /* Resources (Tests) */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8A1234560123456700000300 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A12345601234567A0000020 /* halfFullApp.swift in Sources */,
+				8A12345601234567A0000021 /* StatusBarController.swift in Sources */,
+				8A12345601234567A0000022 /* ConversionController.swift in Sources */,
+				8A12345601234567A0000023 /* ConversionEngine.swift in Sources */,
+				8A12345601234567A0000024 /* KeyCode.swift in Sources */,
+				8A12345601234567A0000025 /* KeyboardSimulator.swift in Sources */,
+				8A12345601234567A0000026 /* PasteboardArbiter.swift in Sources */,
+				8A12345601234567A0000027 /* AccessibilityHelper.swift in Sources */,
+				8A12345601234567A0000028 /* HotKeyManager.swift in Sources */,
+				8A12345601234567A0000029 /* LaunchAtLoginManager.swift in Sources */,
+				8A12345601234567A000002A /* NotificationPresenter.swift in Sources */,
+				8A12345601234567A000002B /* PreferencesStore.swift in Sources */,
+				8A12345601234567A000002C /* MainView.swift in Sources */,
+				8A12345601234567A000002D /* HotKeyRecorderView.swift in Sources */,
+				8A12345601234567A000002E /* FocusInspector.swift in Sources */,
+				8A12345601234567A000002F /* WindowControllers.swift in Sources */,
+				8A12345601234567A0000040 /* AXTextEditor.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8A1234560123456700000310 /* Sources (Tests) */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A12345601234567A0000050 /* ConversionEngineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8A1234560123456700000802 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8A1234560123456700000400 /* halfFull */;
+			targetProxy = 8A1234560123456700000801 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		8A1234560123456700000600 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		8A1234560123456700000601 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		8A1234560123456700000610 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = halfFull.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_ASSET_PATHS = "\"Preview Content\"";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = me.taresky.halffull;
+				PRODUCT_MODULE_NAME = halfFull;
+				PRODUCT_NAME = halfFull;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		8A1234560123456700000611 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = halfFull.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_ASSET_PATHS = "\"Preview Content\"";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 0.1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = me.taresky.halffull;
+				PRODUCT_MODULE_NAME = halfFull;
+				PRODUCT_NAME = halfFull;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		8A1234560123456700000620 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 0.1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = me.taresky.halffulltests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/halfFull.app/Contents/MacOS/halfFull";
+			};
+			name = Debug;
+		};
+		8A1234560123456700000621 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 0.1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = me.taresky.halffulltests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/halfFull.app/Contents/MacOS/halfFull";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8A1234560123456700000700 /* Build configuration list for PBXProject "halfFull" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A1234560123456700000600 /* Debug */,
+				8A1234560123456700000601 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8A1234560123456700000701 /* Build configuration list for PBXNativeTarget "halfFull" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A1234560123456700000610 /* Debug */,
+				8A1234560123456700000611 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8A1234560123456700000702 /* Build configuration list for PBXNativeTarget "halfFullTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8A1234560123456700000620 /* Debug */,
+				8A1234560123456700000621 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8A1234560123456700000500 /* Project object */;
+}
