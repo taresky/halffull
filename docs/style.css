@@ -93,8 +93,19 @@ h1 {
   margin: 0 0 6px;
   line-height: 1.5;
 }
-.tagline:last-of-type { margin-bottom: 40px; }
+.tagline:last-of-type { margin-bottom: 16px; }
 .tagline.lang-en { color: var(--ink); font-weight: 500; }
+
+/* Scenario subhead — quiet, factual, keyword-bearing. Sits under the taglines
+   and above the form demo; the JA line carries the search terms, the EN line
+   makes the use case legible to non-CJK readers. */
+.context {
+  font-size: 14px;
+  color: var(--ink-faint);
+  line-height: 1.6;
+  margin: 0 0 40px;
+}
+.context span { display: block; }
 .kbd-line { margin-right: 4px; }
 /* Halfwidth/fullwidth visual contrast in the EN tagline — the line itself
    visually demonstrates what the product does to your text.

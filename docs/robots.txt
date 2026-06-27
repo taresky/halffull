@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://halffull.taresky.me/sitemap.xml

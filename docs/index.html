@@ -1,17 +1,63 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>halfFull</title>
-  <meta name="description" content="The macOS hotkey for Japanese forms that demand full-width input. Press ⌥F." />
-  <meta property="og:title" content="halfFull" />
-  <meta property="og:description" content="The macOS hotkey for Japanese forms that demand full-width input." />
-  <meta property="og:image" content="assets/icon-1024.png" />
+  <title>halfFull — Macで半角を全角に一発変換（⌥F）</title>
+  <meta name="description" content="日本のフォームで「全角カタカナで入力してください」「全角ローマ字で入力してください」と表示されたら、⌥Fで半角を全角に変換するmacOSアプリ。A tiny macOS app for Japanese forms that require full-width katakana, romaji, or alphanumeric input." />
+  <link rel="canonical" href="https://halffull.taresky.me/" />
+
+  <!-- Open Graph (Facebook, Slack, Discord, LINE, …) -->
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="halfFull" />
+  <meta property="og:url" content="https://halffull.taresky.me/" />
+  <meta property="og:title" content="halfFull — Macで半角を全角に一発変換" />
+  <meta property="og:description" content="日本のフォームで全角入力を求められたら、⌥Fで半角を全角に。A macOS hotkey for Japanese forms that demand full-width input." />
+  <meta property="og:image" content="https://halffull.taresky.me/assets/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="halfFull — press ⌥F to convert half-width text to full-width" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:locale:alternate" content="en_US" />
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@taresky" />
+  <meta name="twitter:creator" content="@taresky" />
+  <meta name="twitter:title" content="halfFull — Macで半角を全角に一発変換" />
+  <meta name="twitter:description" content="日本のフォームで全角入力を求められたら、⌥Fで半角を全角に。" />
+  <meta name="twitter:image" content="https://halffull.taresky.me/assets/og.png" />
+  <meta name="twitter:image:alt" content="halfFull — press ⌥F to convert half-width text to full-width" />
+
   <link rel="icon" href="assets/icon-256.png" type="image/png" />
   <link rel="apple-touch-icon" href="assets/icon-256.png" />
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Structured data: helps Google understand this is a free macOS utility app -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "halfFull",
+    "operatingSystem": "macOS 13+",
+    "applicationCategory": "UtilitiesApplication",
+    "description": "A macOS hotkey app for Japanese forms that require full-width input. Press ⌥F to convert half-width text to full-width.",
+    "url": "https://halffull.taresky.me/",
+    "downloadUrl": "https://github.com/taresky/halffull/releases/latest",
+    "image": "https://halffull.taresky.me/assets/og.png",
+    "inLanguage": ["ja", "en", "zh"],
+    "author": {
+      "@type": "Person",
+      "name": "taresky",
+      "url": "https://x.com/taresky"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
 </head>
 <body>
 
@@ -19,9 +65,13 @@
     <img src="assets/icon-256.png" alt="" width="128" height="128" class="icon" />
     <h1>halfFull</h1>
 
-    <p class="tagline lang-en"><span class="kbd-line"><kbd>⌥</kbd><kbd>F</kbd></span>　<span class="hw">Press once.</span>　<span class="fw">Ｗｉｄｔｈ-ｃｏｒｒｅｃｔ．</span></p>
-    <p class="tagline lang-zh">按一下 <kbd>⌥</kbd><kbd>F</kbd>，半角立刻全角。</p>
+    <p class="tagline lang-en" lang="en"><span class="kbd-line"><kbd>⌥</kbd><kbd>F</kbd></span>　<span class="hw">Press once.</span>　<span class="fw">Ｗｉｄｔｈ-ｃｏｒｒｅｃｔ．</span></p>
+    <p class="tagline lang-zh" lang="zh">按一下 <kbd>⌥</kbd><kbd>F</kbd>，半角立刻全角。</p>
     <p class="tagline lang-ja"><kbd>⌥</kbd><kbd>F</kbd> で、半角を全角に。</p>
+
+    <!-- Plain-language scenario line: tells first-time visitors (and crawlers)
+         exactly who this is for, using the words people actually search. -->
+    <p class="context">全角カタカナ・全角ローマ字を求める日本のフォーム向け。<span lang="en">For Japanese forms that demand full-width katakana or romaji input.</span></p>
 
     <!-- Mock form fields — left rejects half-width, right accepts full-width.
          This is the actual product moment: filling a Japanese site that demands
@@ -42,7 +92,7 @@
         <div class="row">
           <label>氏名（カナ）<span class="req">必須</span></label>
           <div class="field" data-state="ok">
-            <input type="text" value="ヤマダ タロウ" readonly>
+            <input type="text" value="ヤマダ　タロウ" readonly>
           </div>
           <p class="msg ok">✓ OK</p>
         </div>
@@ -74,9 +124,9 @@
       </div>
     </section>
 
-    <a class="download" href="https://github.com/taresky/halffull/releases">Download for macOS</a>
+    <a class="download" href="https://github.com/taresky/halffull/releases/latest">Download for macOS</a>
 
-    <footer>
+    <footer lang="en">
       <span>macOS 13+</span>
       <span aria-hidden="true">·</span>
       <a href="https://github.com/taresky/halffull">Source</a>

@@ -2,6 +2,8 @@
 
 > macOS hotkey (<kbd>⌥</kbd><kbd>F</kbd>) for Japanese forms that demand full-width input. 半角を全角に。
 >
+> 「全角カタカナで入力してください」「全角ローマ字で入力してください」で困ったときに。
+>
 > [halffull.taresky.me](https://halffull.taresky.me)
 
 <p align="center">
