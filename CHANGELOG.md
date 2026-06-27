@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.2] - 2026-06-27
+
+- Ship as a universal binary (arm64 + x86_64). Earlier 0.1.x releases were arm64-only, which silently broke installs on Intel Macs.
+
+## [0.1.1] - 2026-06-27
+
+- In-app permission recovery for the common "TCC grant invalidated after an ad-hoc-signed update" trap. When the main window detects the stale-grant state it now offers a single **Recover Permission** button that runs `tccutil reset` for our bundle id, relaunches a fresh process, and auto-fires the system permission prompt — no Terminal required.
+
 ## [0.1.0] - 2026-06-27
 
 First public release.
