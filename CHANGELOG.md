@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.1.3] - 2026-07-02
+
+- New **Show in menu bar** setting (default on). Uncheck it to hide the
+  menu-bar icon — the global hotkey keeps working; open the app again from
+  Launchpad/Finder/Spotlight to bring back the settings window.
+- Login-item launches are now detected from the launching Apple Event
+  (`keyAELaunchedAsLogInItem`) instead of a boot-time heuristic, so manually
+  opening the app right after login reliably shows the window.
+- Stopped opting into automatic termination (`NSSupportsAutomaticTermination`):
+  once the icon is hidden and the window closed the app had zero visible
+  surfaces, and macOS was allowed to silently kill it — taking the global
+  hotkey down with it.
+
 ## [0.1.2] - 2026-06-27
 
 - Ship as a universal binary (arm64 + x86_64). Earlier 0.1.x releases were arm64-only, which silently broke installs on Intel Macs.
