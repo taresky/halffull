@@ -30,8 +30,6 @@
     <string>Copyright © 2026 Taresky. PolyForm Noncommercial 1.0.0.</string>
     <key>NSPrincipalClass</key>
     <string>NSApplication</string>
-    <key>NSSupportsAutomaticTermination</key>
-    <true/>
     <key>NSSupportsSuddenTermination</key>
     <true/>
 </dict>
