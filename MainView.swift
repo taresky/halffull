@@ -279,6 +279,11 @@ struct MainView: View {
                                      launchAtLoginToggle = LaunchAtLoginManager.isEnabled
                                      prefs.launchAtLogin = launchAtLoginToggle
                                  }))
+            Toggle(NSLocalizedString("prefs.showMenuBarIcon",
+                                     value: "Show in menu bar",
+                                     comment: ""),
+                   isOn: Binding(get: { prefs.showMenuBarIcon },
+                                 set: { prefs.showMenuBarIcon = $0 }))
         }
     }
 

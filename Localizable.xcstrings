@@ -303,6 +303,13 @@
         "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "转换设置" } }
       }
     },
+    "prefs.showMenuBarIcon" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Show in menu bar" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "在菜单栏显示" } }
+      }
+    },
     "prefs.tab.about" : {
       "extractionState" : "manual",
       "localizations" : {

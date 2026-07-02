@@ -14,6 +14,10 @@ final class PreferencesStore: ObservableObject {
     /// so `HotKeyManager` can re-register without subscribing to Combine.
     static let hotKeyChangedNotification = Notification.Name("FWCHotKeyChanged")
 
+    /// Posted (in addition to `objectWillChange`) when the menu-bar-icon pref
+    /// changes, so `StatusBarController` can re-sync without Combine.
+    static let menuBarIconChangedNotification = Notification.Name("FWCMenuBarIconChanged")
+
     // MARK: - Keys (single source of truth — never literal-stringify outside this enum)
 
     private enum Key {
@@ -26,6 +30,7 @@ final class PreferencesStore: ObservableObject {
         static let playSoundOnSuccess = "behavior.playSoundOnSuccess"
         static let showNotifications = "behavior.showNotifications"
         static let launchAtLogin = "behavior.launchAtLogin"
+        static let showMenuBarIcon = "behavior.showMenuBarIcon"
         static let hasCompletedOnboarding = "onboarding.completed"
         static let hasGrantedAXBefore = "ax.hasGrantedBefore"
     }
@@ -44,6 +49,7 @@ final class PreferencesStore: ObservableObject {
             Key.playSoundOnSuccess: false,
             Key.showNotifications: true,
             Key.launchAtLogin: false,
+            Key.showMenuBarIcon: true,
             Key.hasCompletedOnboarding: false,
             Key.hasGrantedAXBefore: false,
         ])
@@ -118,6 +124,15 @@ final class PreferencesStore: ObservableObject {
     var launchAtLogin: Bool {
         get { defaults.bool(forKey: Key.launchAtLogin) }
         set { objectWillChange.send(); defaults.set(newValue, forKey: Key.launchAtLogin) }
+    }
+
+    var showMenuBarIcon: Bool {
+        get { defaults.bool(forKey: Key.showMenuBarIcon) }
+        set {
+            objectWillChange.send()
+            defaults.set(newValue, forKey: Key.showMenuBarIcon)
+            NotificationCenter.default.post(name: Self.menuBarIconChangedNotification, object: nil)
+        }
     }
 
     var hasCompletedOnboarding: Bool {

@@ -23,9 +23,18 @@ final class StatusBarController: NSObject {
         configureButton()
         statusItem.menu = buildMenu()
 
+        // Our pref is the single source of truth for visibility. AppKit also
+        // persists isVisible under its own defaults key (per autosaveName);
+        // this unconditional assignment overrides whatever it restored.
+        statusItem.isVisible = PreferencesStore.shared.showMenuBarIcon
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(handleHotKeyChanged),
                                                name: PreferencesStore.hotKeyChangedNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleMenuBarIconChanged),
+                                               name: PreferencesStore.menuBarIconChangedNotification,
                                                object: nil)
     }
 
@@ -116,4 +125,8 @@ final class StatusBarController: NSObject {
     @objc private func openAbout()         { openAboutHandler() }
     @objc private func quit()              { NSApp.terminate(nil) }
     @objc private func handleHotKeyChanged() { refresh() }
+
+    @objc private func handleMenuBarIconChanged() {
+        statusItem.isVisible = PreferencesStore.shared.showMenuBarIcon
+    }
 }
