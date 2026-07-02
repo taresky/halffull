@@ -28,6 +28,8 @@
 		8A12345601234567B0000031 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000031 /* Localizable.xcstrings */; };
 		8A12345601234567B0000032 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000032 /* Preview Assets.xcassets */; };
 		8A12345601234567A0000050 /* ConversionEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000050 /* ConversionEngineTests.swift */; };
+		8A12345601234567A0000051 /* LaunchReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000051 /* LaunchReason.swift */; };
+		8A12345601234567A0000052 /* LaunchReasonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000052 /* LaunchReasonTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,8 @@
 		8A1234560123456700000031 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		8A1234560123456700000032 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8A1234560123456700000050 /* ConversionEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionEngineTests.swift; sourceTree = "<group>"; };
+		8A1234560123456700000051 /* LaunchReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchReason.swift; sourceTree = "<group>"; };
+		8A1234560123456700000052 /* LaunchReasonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchReasonTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +152,7 @@
 				8A1234560123456700000029 /* LaunchAtLoginManager.swift */,
 				8A123456012345670000002A /* NotificationPresenter.swift */,
 				8A123456012345670000002B /* PreferencesStore.swift */,
+				8A1234560123456700000051 /* LaunchReason.swift */,
 			);
 			name = System;
 			sourceTree = "<group>";
@@ -177,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				8A1234560123456700000050 /* ConversionEngineTests.swift */,
+				8A1234560123456700000052 /* LaunchReasonTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -290,6 +296,7 @@
 				8A12345601234567A0000027 /* AccessibilityHelper.swift in Sources */,
 				8A12345601234567A0000028 /* HotKeyManager.swift in Sources */,
 				8A12345601234567A0000029 /* LaunchAtLoginManager.swift in Sources */,
+				8A12345601234567A0000051 /* LaunchReason.swift in Sources */,
 				8A12345601234567A000002A /* NotificationPresenter.swift in Sources */,
 				8A12345601234567A000002B /* PreferencesStore.swift in Sources */,
 				8A12345601234567A000002C /* MainView.swift in Sources */,
@@ -305,6 +312,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A12345601234567A0000050 /* ConversionEngineTests.swift in Sources */,
+				8A12345601234567A0000052 /* LaunchReasonTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -165,13 +165,15 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     private func shouldOpenMainWindowOnLaunch() -> Bool {
-        // Within the first 90 s of system uptime AND registered as a Login Item ⇒
-        // treat as a "user just logged in" launch and stay silent in the menu bar.
-        // Anything else (Finder/Spotlight/manual launch) → show the window.
-        let uptime = ProcessInfo.processInfo.systemUptime
-        let isLoginItemRegistered = SMAppService.mainApp.status == .enabled
-        let looksLikeLoginLaunch = uptime < 90 && isLoginItemRegistered
-        return !looksLikeLoginLaunch
+        // Login-item launches are detected from the launching Apple Event
+        // (keyAELaunchedAsLogInItem) — authoritative, so a manual open right
+        // after boot still shows the window. The uptime heuristic only breaks
+        // ties when no event is available. See LaunchReason.
+        let isLoginLaunch = LaunchReason.isLoginItemLaunch(
+            event: NSAppleEventManager.shared().currentAppleEvent,
+            systemUptime: ProcessInfo.processInfo.systemUptime,
+            isLoginItemRegistered: SMAppService.mainApp.status == .enabled)
+        return !isLoginLaunch
     }
 
     /// Dock-click / Cmd+Tab when no window is visible — reopen the main window.

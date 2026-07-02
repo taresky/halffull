@@ -18,8 +18,12 @@
 - Localization key: `prefs.showMenuBarIcon` — en "Show in menu bar", zh-Hans "在菜单栏显示".
 - Never call `NSStatusBar.removeStatusItem` — visibility only.
 - `NSSupportsSuddenTermination` stays in Info.plist; only `NSSupportsAutomaticTermination` is removed.
-- Build: `xcodebuild -project halfFull.xcodeproj -scheme halfFull -configuration Debug build`
-- Test: `xcodebuild -project halfFull.xcodeproj -scheme halfFull test -destination 'platform=macOS'`
+- **This machine has no Xcode** (Command Line Tools only). Local build: `./Scripts/build.sh`
+  (swiftc direct compile — its hand-maintained `SWIFT_SOURCES` list must include any new source file).
+  Local tests: standalone `Scripts/run_*.sh` runners (swift interpreter + inline assertions, the
+  `run_engine_tests.sh` pattern), because XCTest isn't available without Xcode.
+- The `xcodebuild` commands below are for machines with Xcode; `Tests/*.swift` XCTest files and the
+  pbxproj wiring are still maintained so the Xcode workflow keeps working.
 
 ---
 
@@ -28,7 +32,9 @@
 **Files:**
 - Create: `LaunchReason.swift` (repo root, like all app sources)
 - Create: `Tests/LaunchReasonTests.swift`
+- Create: `Scripts/run_launchreason_tests.sh` (standalone runner, `run_engine_tests.sh` pattern — local TDD cycle without Xcode)
 - Modify: `halfFull.xcodeproj/project.pbxproj` (4 sections)
+- Modify: `Scripts/build.sh` (`SWIFT_SOURCES` list — add `LaunchReason.swift`)
 - Modify: `halfFullApp.swift:167-175` (`shouldOpenMainWindowOnLaunch`)
 
 **Interfaces:**

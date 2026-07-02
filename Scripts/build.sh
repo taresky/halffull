@@ -43,6 +43,7 @@ SWIFT_SOURCES=(
     KeyboardSimulator.swift
     KeyCode.swift
     LaunchAtLoginManager.swift
+    LaunchReason.swift
     MainView.swift
     NotificationPresenter.swift
     PasteboardArbiter.swift
