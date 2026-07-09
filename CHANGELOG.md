@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.5] - 2026-07-09
+
+- Under the hood: `@Pref` property wrapper folds the PreferencesStore
+  send-then-set ritual (interface unchanged).
+- No intentional user-facing behavior change.
+
 ## [0.1.4] - 2026-07-09
 
 - Under the hood: collapse focused-field edit into a deep `EditableField`

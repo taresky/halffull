@@ -5,7 +5,7 @@ import Carbon.HIToolbox
 /// Centralized, observable preferences backed by `UserDefaults`.
 /// SwiftUI binds to it via `@ObservedObject`; AppKit reads via the typed properties.
 ///
-/// Adding a new preference is two lines: a key, and a `published(_:default:)` declaration.
+/// Adding a new preference is two lines: a key, and a `@Pref(...)` declaration.
 final class PreferencesStore: ObservableObject {
 
     static let shared = PreferencesStore()
@@ -56,6 +56,8 @@ final class PreferencesStore: ObservableObject {
     }
 
     // MARK: - Hotkey
+    //
+    // Multi-key + extra notification — stays hand-written so both axes write once.
 
     var hotKey: HotKey {
         get {
@@ -76,69 +78,107 @@ final class PreferencesStore: ObservableObject {
 
     // MARK: - Conversion
     //
-    // Setters fire `objectWillChange` BEFORE writing to `defaults`, matching the
+    // `@Pref` fires `objectWillChange` BEFORE writing to `defaults`, matching the
     // ObservableObject contract (mirrors @Published's willSet semantics — observers
     // that snap the old value via `objectWillChange.sink { ... }` see the pre-change
     // state, not the post-change one).
 
-    var conversionDirection: ConversionDirection {
-        get { ConversionDirection(rawValue: defaults.string(forKey: Key.conversionDirection) ?? "") ?? .smart }
-        set { objectWillChange.send(); defaults.set(newValue.rawValue, forKey: Key.conversionDirection) }
-    }
+    @Pref(Key.conversionDirection, fallback: .smart)
+    var conversionDirection: ConversionDirection
 
-    var conversionScope: ConversionScope {
-        get { ConversionScope(rawValue: defaults.string(forKey: Key.conversionScope) ?? "") ?? .all }
-        set { objectWillChange.send(); defaults.set(newValue.rawValue, forKey: Key.conversionScope) }
-    }
+    @Pref(Key.conversionScope, fallback: .all)
+    var conversionScope: ConversionScope
 
     // MARK: - Behavior toggles
 
-    var restoreClipboard: Bool {
-        get { defaults.bool(forKey: Key.restoreClipboard) }
-        set { objectWillChange.send(); defaults.set(newValue, forKey: Key.restoreClipboard) }
-    }
+    @Pref(Key.restoreClipboard)
+    var restoreClipboard: Bool
 
-    var convertSpaceToIdeographic: Bool {
-        get { defaults.bool(forKey: Key.convertSpaceToIdeographic) }
-        set { objectWillChange.send(); defaults.set(newValue, forKey: Key.convertSpaceToIdeographic) }
-    }
+    @Pref(Key.convertSpaceToIdeographic)
+    var convertSpaceToIdeographic: Bool
 
-    var playSoundOnSuccess: Bool {
-        get { defaults.bool(forKey: Key.playSoundOnSuccess) }
-        set { objectWillChange.send(); defaults.set(newValue, forKey: Key.playSoundOnSuccess) }
-    }
+    @Pref(Key.playSoundOnSuccess)
+    var playSoundOnSuccess: Bool
 
-    var showNotifications: Bool {
-        get { defaults.bool(forKey: Key.showNotifications) }
-        set { objectWillChange.send(); defaults.set(newValue, forKey: Key.showNotifications) }
-    }
+    @Pref(Key.showNotifications)
+    var showNotifications: Bool
 
-    var launchAtLogin: Bool {
-        get { defaults.bool(forKey: Key.launchAtLogin) }
-        set { objectWillChange.send(); defaults.set(newValue, forKey: Key.launchAtLogin) }
-    }
+    @Pref(Key.launchAtLogin)
+    var launchAtLogin: Bool
 
-    var showMenuBarIcon: Bool {
-        get { defaults.bool(forKey: Key.showMenuBarIcon) }
-        set {
-            objectWillChange.send()
-            defaults.set(newValue, forKey: Key.showMenuBarIcon)
-            NotificationCenter.default.post(name: Self.menuBarIconChangedNotification, object: nil)
-        }
-    }
+    @Pref(Key.showMenuBarIcon, notification: PreferencesStore.menuBarIconChangedNotification)
+    var showMenuBarIcon: Bool
 
-    var hasCompletedOnboarding: Bool {
-        get { defaults.bool(forKey: Key.hasCompletedOnboarding) }
-        set { objectWillChange.send(); defaults.set(newValue, forKey: Key.hasCompletedOnboarding) }
-    }
+    @Pref(Key.hasCompletedOnboarding)
+    var hasCompletedOnboarding: Bool
 
     /// Sticky bit: flipped to `true` the first time we observe a successful
     /// `AXIsProcessTrusted == true`. Never cleared. Used to distinguish
     /// "fresh install, user hasn't granted yet" from "granted before, but TCC
     /// lost the grant after an ad-hoc-signed update." The latter case triggers
     /// the in-app recovery flow.
-    var hasGrantedAXBefore: Bool {
-        get { defaults.bool(forKey: Key.hasGrantedAXBefore) }
-        set { objectWillChange.send(); defaults.set(newValue, forKey: Key.hasGrantedAXBefore) }
+    @Pref(Key.hasGrantedAXBefore)
+    var hasGrantedAXBefore: Bool
+}
+
+// MARK: - @Pref
+
+/// UserDefaults-backed property wrapper that centralises the send-then-set ritual.
+///
+/// Uses the enclosing-instance subscript so setters fire `objectWillChange` on the
+/// parent `PreferencesStore` before writing — same ordering as hand-written setters
+/// and as `@Published`. Optional `notification` posts an extra `Notification.Name`
+/// for AppKit listeners that don't subscribe to Combine.
+///
+/// Interface is unchanged: callers still see typed properties. Depth barely moves;
+/// this is a consistency / locality win for the storage ritual only.
+@propertyWrapper
+struct Pref<Value> {
+    let key: String
+    let notification: Notification.Name?
+    private let read: (UserDefaults, String) -> Value
+    private let write: (UserDefaults, String, Value) -> Void
+
+    @available(*, unavailable, message: "@Pref only works as a PreferencesStore stored property")
+    var wrappedValue: Value {
+        get { fatalError("wrappedValue is unavailable; use the enclosing-instance subscript") }
+        set { fatalError("wrappedValue is unavailable; use the enclosing-instance subscript") }
+    }
+
+    static subscript(
+        _enclosingInstance instance: PreferencesStore,
+        wrapped wrappedKeyPath: ReferenceWritableKeyPath<PreferencesStore, Value>,
+        storage storageKeyPath: ReferenceWritableKeyPath<PreferencesStore, Self>
+    ) -> Value {
+        get {
+            let pref = instance[keyPath: storageKeyPath]
+            return pref.read(UserDefaults.standard, pref.key)
+        }
+        set {
+            let pref = instance[keyPath: storageKeyPath]
+            instance.objectWillChange.send()
+            pref.write(UserDefaults.standard, pref.key, newValue)
+            if let name = pref.notification {
+                NotificationCenter.default.post(name: name, object: nil)
+            }
+        }
+    }
+}
+
+extension Pref where Value == Bool {
+    init(_ key: String, notification: Notification.Name? = nil) {
+        self.key = key
+        self.notification = notification
+        self.read = { $0.bool(forKey: $1) }
+        self.write = { $0.set($2, forKey: $1) }
+    }
+}
+
+extension Pref where Value: RawRepresentable, Value.RawValue == String {
+    init(_ key: String, fallback: Value, notification: Notification.Name? = nil) {
+        self.key = key
+        self.notification = notification
+        self.read = { Value(rawValue: $0.string(forKey: $1) ?? "") ?? fallback }
+        self.write = { $0.set($2.rawValue, forKey: $1) }
     }
 }
