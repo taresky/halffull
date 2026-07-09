@@ -25,10 +25,9 @@ final class HotKeyManager {
 
     /// Register (or re-register) the global hotkey.
     /// - Parameters:
-    ///   - keyCode: a `kVK_*` virtual key code.
-    ///   - carbonModifiers: combination of `cmdKey | shiftKey | optionKey | controlKey`.
+    ///   - hotKey: the binding to register (virtual key + Carbon modifier bits).
     ///   - handler: invoked on the main thread when the hotkey fires.
-    func register(keyCode: UInt32, carbonModifiers: UInt32, handler: @escaping () -> Void) {
+    func register(_ hotKey: HotKey, handler: @escaping () -> Void) {
         unregister()
         self.fired = handler
 
@@ -36,8 +35,8 @@ final class HotKeyManager {
 
         var ref: EventHotKeyRef?
         let hotKeyID = EventHotKeyID(signature: Self.signature, id: Self.id)
-        let status = RegisterEventHotKey(keyCode,
-                                         carbonModifiers,
+        let status = RegisterEventHotKey(hotKey.keyCode,
+                                         hotKey.carbonModifiers,
                                          hotKeyID,
                                          GetApplicationEventTarget(),
                                          0,
@@ -99,40 +98,5 @@ final class HotKeyManager {
             return
         }
         self.eventHandler = handlerRef
-    }
-}
-
-// MARK: - Modifier flag translation
-
-/// Translate between Carbon modifier bits (used by RegisterEventHotKey) and
-/// AppKit's `NSEvent.ModifierFlags` (used by the recorder UI).
-enum ModifierTranslator {
-
-    static func carbonFlags(from cocoa: NSEvent.ModifierFlags) -> UInt32 {
-        var flags: UInt32 = 0
-        if cocoa.contains(.command) { flags |= UInt32(cmdKey) }
-        if cocoa.contains(.shift)   { flags |= UInt32(shiftKey) }
-        if cocoa.contains(.option)  { flags |= UInt32(optionKey) }
-        if cocoa.contains(.control) { flags |= UInt32(controlKey) }
-        return flags
-    }
-
-    static func cocoaFlags(from carbon: UInt32) -> NSEvent.ModifierFlags {
-        var flags: NSEvent.ModifierFlags = []
-        if carbon & UInt32(cmdKey)     != 0 { flags.insert(.command) }
-        if carbon & UInt32(shiftKey)   != 0 { flags.insert(.shift) }
-        if carbon & UInt32(optionKey)  != 0 { flags.insert(.option) }
-        if carbon & UInt32(controlKey) != 0 { flags.insert(.control) }
-        return flags
-    }
-
-    static func symbolicDescription(carbonModifiers: UInt32, keyCode: UInt32) -> String {
-        var parts: [String] = []
-        if carbonModifiers & UInt32(controlKey) != 0 { parts.append("⌃") }
-        if carbonModifiers & UInt32(optionKey)  != 0 { parts.append("⌥") }
-        if carbonModifiers & UInt32(shiftKey)   != 0 { parts.append("⇧") }
-        if carbonModifiers & UInt32(cmdKey)     != 0 { parts.append("⌘") }
-        parts.append(KeyCode.label(forVirtualKey: keyCode))
-        return parts.joined()
     }
 }

@@ -1,5 +1,25 @@
 import Cocoa
 
+/// The three permission states the app reacts to. Both the settings banner and
+/// the launch-time recovery flow key off this — so the derivation lives in one
+/// place instead of being re-computed in `MainView` and the `AppDelegate`.
+enum TrustState: Equatable {
+    /// AX permission is live.
+    case granted
+    /// Granted before, but TCC lost the grant (typical after an ad-hoc-signed
+    /// update gives the app a new CDHash). The recovery flow handles this.
+    case staleGrant
+    /// Never granted — a first-time user.
+    case freshNeed
+
+    /// Pure derivation. `hasGrantedBefore` is the sticky bit that separates a
+    /// fresh install from a lost-grant-after-update.
+    static func derive(isTrusted: Bool, hasGrantedBefore: Bool) -> TrustState {
+        if isTrusted { return .granted }
+        return hasGrantedBefore ? .staleGrant : .freshNeed
+    }
+}
+
 /// Wraps the AX trust check + System Settings deep link.
 /// The "prompt" variant triggers the OS's one-time built-in dialog; we use it
 /// only on the first launch so we don't pop the system sheet on every check.
@@ -16,6 +36,17 @@ final class AccessibilityHelper {
     /// The "WithOptions" variant talks to the TCC daemon and returns a fresh result.
     var isTrusted: Bool {
         AXIsProcessTrustedWithOptions(nil)
+    }
+
+    /// Read live AX trust, maintain the sticky "granted before" bit, and return
+    /// the derived `TrustState`. This is the single call both the settings banner
+    /// (polled) and the launch-time recovery flow use — neither re-derives the rule.
+    @discardableResult
+    func refreshTrustState() -> TrustState {
+        let trusted = isTrusted
+        if trusted { PreferencesStore.shared.hasGrantedAXBefore = true }
+        return TrustState.derive(isTrusted: trusted,
+                                 hasGrantedBefore: PreferencesStore.shared.hasGrantedAXBefore)
     }
 
     /// Prompting check — shows the system "wants to control your computer" sheet

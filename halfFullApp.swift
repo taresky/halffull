@@ -69,9 +69,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         // Deferred to next runloop turn so AppKit is fully up; the AX prompt
         // needs a parent app context to render in-context.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            if AccessibilityHelper.shared.isTrusted {
-                PreferencesStore.shared.hasGrantedAXBefore = true
-            } else if PreferencesStore.shared.hasGrantedAXBefore {
+            if AccessibilityHelper.shared.refreshTrustState() == .staleGrant {
                 AccessibilityHelper.shared.ensureTrustedPrompt()
                 AccessibilityHelper.shared.openAccessibilitySettings()
             }
@@ -185,9 +183,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     // MARK: - Hotkey
 
     private func registerHotKey() {
-        let prefs = PreferencesStore.shared
-        HotKeyManager.shared.register(keyCode: prefs.hotKeyKeyCode,
-                                      carbonModifiers: prefs.hotKeyCarbonModifiers) {
+        HotKeyManager.shared.register(PreferencesStore.shared.hotKey) {
             ConversionController.shared.trigger()
         }
     }

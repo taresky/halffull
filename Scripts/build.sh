@@ -33,12 +33,13 @@ echo "▸ Compiling Swift sources…"
 SDK="$(xcrun --sdk macosx --show-sdk-path)"
 SWIFT_SOURCES=(
     AccessibilityHelper.swift
-    AXTextEditor.swift
     ConversionController.swift
     ConversionEngine.swift
+    EditableField.swift
     FocusInspector.swift
     halfFullApp.swift
     HotKeyManager.swift
+    HotKey.swift
     HotKeyRecorderView.swift
     KeyboardSimulator.swift
     KeyCode.swift

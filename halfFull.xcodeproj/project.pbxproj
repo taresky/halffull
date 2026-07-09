@@ -16,6 +16,7 @@
 		8A12345601234567A0000026 /* PasteboardArbiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000026 /* PasteboardArbiter.swift */; };
 		8A12345601234567A0000027 /* AccessibilityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000027 /* AccessibilityHelper.swift */; };
 		8A12345601234567A0000028 /* HotKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000028 /* HotKeyManager.swift */; };
+		8A12345601234567A0000041 /* HotKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000041 /* HotKey.swift */; };
 		8A12345601234567A0000029 /* LaunchAtLoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000029 /* LaunchAtLoginManager.swift */; };
 		8A12345601234567A000002A /* NotificationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A123456012345670000002A /* NotificationPresenter.swift */; };
 		8A12345601234567A000002B /* PreferencesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A123456012345670000002B /* PreferencesStore.swift */; };
@@ -23,13 +24,14 @@
 		8A12345601234567A000002D /* HotKeyRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A123456012345670000002D /* HotKeyRecorderView.swift */; };
 		8A12345601234567A000002E /* FocusInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A123456012345670000002E /* FocusInspector.swift */; };
 		8A12345601234567A000002F /* WindowControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A123456012345670000002F /* WindowControllers.swift */; };
-		8A12345601234567A0000040 /* AXTextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000040 /* AXTextEditor.swift */; };
+		8A12345601234567A0000040 /* EditableField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000040 /* EditableField.swift */; };
 		8A12345601234567B0000030 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000030 /* Assets.xcassets */; };
 		8A12345601234567B0000031 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000031 /* Localizable.xcstrings */; };
 		8A12345601234567B0000032 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000032 /* Preview Assets.xcassets */; };
 		8A12345601234567A0000050 /* ConversionEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000050 /* ConversionEngineTests.swift */; };
 		8A12345601234567A0000051 /* LaunchReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000051 /* LaunchReason.swift */; };
 		8A12345601234567A0000052 /* LaunchReasonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000052 /* LaunchReasonTests.swift */; };
+		8A12345601234567A0000053 /* TrustStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000053 /* TrustStateTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,7 @@
 		8A1234560123456700000026 /* PasteboardArbiter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteboardArbiter.swift; sourceTree = "<group>"; };
 		8A1234560123456700000027 /* AccessibilityHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityHelper.swift; sourceTree = "<group>"; };
 		8A1234560123456700000028 /* HotKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyManager.swift; sourceTree = "<group>"; };
+		8A1234560123456700000041 /* HotKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKey.swift; sourceTree = "<group>"; };
 		8A1234560123456700000029 /* LaunchAtLoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginManager.swift; sourceTree = "<group>"; };
 		8A123456012345670000002A /* NotificationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPresenter.swift; sourceTree = "<group>"; };
 		8A123456012345670000002B /* PreferencesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesStore.swift; sourceTree = "<group>"; };
@@ -63,13 +66,14 @@
 		8A123456012345670000002D /* HotKeyRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyRecorderView.swift; sourceTree = "<group>"; };
 		8A123456012345670000002E /* FocusInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusInspector.swift; sourceTree = "<group>"; };
 		8A123456012345670000002F /* WindowControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowControllers.swift; sourceTree = "<group>"; };
-		8A1234560123456700000040 /* AXTextEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AXTextEditor.swift; sourceTree = "<group>"; };
+		8A1234560123456700000040 /* EditableField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableField.swift; sourceTree = "<group>"; };
 		8A1234560123456700000030 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8A1234560123456700000031 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		8A1234560123456700000032 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8A1234560123456700000050 /* ConversionEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionEngineTests.swift; sourceTree = "<group>"; };
 		8A1234560123456700000051 /* LaunchReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchReason.swift; sourceTree = "<group>"; };
 		8A1234560123456700000052 /* LaunchReasonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchReasonTests.swift; sourceTree = "<group>"; };
+		8A1234560123456700000053 /* TrustStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustStateTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,7 +142,7 @@
 				8A1234560123456700000024 /* KeyCode.swift */,
 				8A1234560123456700000025 /* KeyboardSimulator.swift */,
 				8A1234560123456700000026 /* PasteboardArbiter.swift */,
-				8A1234560123456700000040 /* AXTextEditor.swift */,
+				8A1234560123456700000040 /* EditableField.swift */,
 				8A123456012345670000002E /* FocusInspector.swift */,
 			);
 			name = Core;
@@ -149,6 +153,7 @@
 			children = (
 				8A1234560123456700000027 /* AccessibilityHelper.swift */,
 				8A1234560123456700000028 /* HotKeyManager.swift */,
+				8A1234560123456700000041 /* HotKey.swift */,
 				8A1234560123456700000029 /* LaunchAtLoginManager.swift */,
 				8A123456012345670000002A /* NotificationPresenter.swift */,
 				8A123456012345670000002B /* PreferencesStore.swift */,
@@ -183,6 +188,7 @@
 			children = (
 				8A1234560123456700000050 /* ConversionEngineTests.swift */,
 				8A1234560123456700000052 /* LaunchReasonTests.swift */,
+				8A1234560123456700000053 /* TrustStateTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -295,6 +301,7 @@
 				8A12345601234567A0000026 /* PasteboardArbiter.swift in Sources */,
 				8A12345601234567A0000027 /* AccessibilityHelper.swift in Sources */,
 				8A12345601234567A0000028 /* HotKeyManager.swift in Sources */,
+				8A12345601234567A0000041 /* HotKey.swift in Sources */,
 				8A12345601234567A0000029 /* LaunchAtLoginManager.swift in Sources */,
 				8A12345601234567A0000051 /* LaunchReason.swift in Sources */,
 				8A12345601234567A000002A /* NotificationPresenter.swift in Sources */,
@@ -303,7 +310,7 @@
 				8A12345601234567A000002D /* HotKeyRecorderView.swift in Sources */,
 				8A12345601234567A000002E /* FocusInspector.swift in Sources */,
 				8A12345601234567A000002F /* WindowControllers.swift in Sources */,
-				8A12345601234567A0000040 /* AXTextEditor.swift in Sources */,
+				8A12345601234567A0000040 /* EditableField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,6 +320,7 @@
 			files = (
 				8A12345601234567A0000050 /* ConversionEngineTests.swift in Sources */,
 				8A12345601234567A0000052 /* LaunchReasonTests.swift in Sources */,
+				8A12345601234567A0000053 /* TrustStateTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

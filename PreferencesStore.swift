@@ -40,8 +40,8 @@ final class PreferencesStore: ObservableObject {
     private init() {
         // Defaults are registered (not set) so the user's explicit values win.
         defaults.register(defaults: [
-            Key.hotKeyKeyCode: UInt32(kVK_ANSI_F),
-            Key.hotKeyCarbonModifiers: UInt32(optionKey),
+            Key.hotKeyKeyCode: HotKey.defaultBinding.keyCode,
+            Key.hotKeyCarbonModifiers: HotKey.defaultBinding.carbonModifiers,
             Key.conversionDirection: ConversionDirection.smart.rawValue,
             Key.conversionScope: ConversionScope.all.rawValue,
             Key.restoreClipboard: true,
@@ -57,28 +57,20 @@ final class PreferencesStore: ObservableObject {
 
     // MARK: - Hotkey
 
-    var hotKeyKeyCode: UInt32 {
-        get { UInt32(defaults.integer(forKey: Key.hotKeyKeyCode)) }
-        // Setting the keyCode alone is rare (the recorder and the reset button both want to
-        // change keyCode AND modifiers together — see `setHotKey(keyCode:carbonModifiers:)`).
-        // We keep the single-axis setter for API symmetry but it still re-registers the hotkey.
-        set { setHotKey(keyCode: newValue, carbonModifiers: hotKeyCarbonModifiers) }
+    var hotKey: HotKey {
+        get {
+            HotKey(keyCode: UInt32(defaults.integer(forKey: Key.hotKeyKeyCode)),
+                   carbonModifiers: UInt32(defaults.integer(forKey: Key.hotKeyCarbonModifiers)))
+        }
+        set { setHotKey(newValue) }
     }
 
-    var hotKeyCarbonModifiers: UInt32 {
-        get { UInt32(defaults.integer(forKey: Key.hotKeyCarbonModifiers)) }
-        set { setHotKey(keyCode: hotKeyKeyCode, carbonModifiers: newValue) }
-    }
-
-    /// Atomic two-axis setter — writes both keys, fires `objectWillChange` and
-    /// `hotKeyChangedNotification` exactly once. Use this instead of mutating the
-    /// individual properties back-to-back; otherwise the global hotkey is briefly
-    /// re-registered with the new keyCode but the OLD modifiers, which can collide
-    /// with another shortcut or be rejected silently by RegisterEventHotKey.
-    func setHotKey(keyCode: UInt32, carbonModifiers: UInt32) {
+    /// Atomic setter — writes both axes, fires `objectWillChange` and
+    /// `hotKeyChangedNotification` exactly once.
+    func setHotKey(_ hotKey: HotKey) {
         objectWillChange.send()
-        defaults.set(Int(keyCode),         forKey: Key.hotKeyKeyCode)
-        defaults.set(Int(carbonModifiers), forKey: Key.hotKeyCarbonModifiers)
+        defaults.set(Int(hotKey.keyCode),         forKey: Key.hotKeyKeyCode)
+        defaults.set(Int(hotKey.carbonModifiers), forKey: Key.hotKeyCarbonModifiers)
         NotificationCenter.default.post(name: Self.hotKeyChangedNotification, object: nil)
     }
 

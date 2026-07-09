@@ -36,8 +36,7 @@ struct HotKeyRecorderView: View {
             .keyboardShortcut(.defaultAction)
 
             Button(NSLocalizedString("hotkey.reset", value: "Reset", comment: "")) {
-                prefs.setHotKey(keyCode: UInt32(kVK_ANSI_F),
-                                carbonModifiers: UInt32(optionKey))
+                prefs.setHotKey(.defaultBinding)
             }
         }
         .onAppear { startResignObserver() }
@@ -45,8 +44,7 @@ struct HotKeyRecorderView: View {
     }
 
     private var currentLabel: String {
-        ModifierTranslator.symbolicDescription(carbonModifiers: prefs.hotKeyCarbonModifiers,
-                                               keyCode: prefs.hotKeyKeyCode)
+        prefs.hotKey.symbolicDescription
     }
 
     private func start() {
@@ -60,8 +58,8 @@ struct HotKeyRecorderView: View {
             let cocoa = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
             let nonShiftModifiers: NSEvent.ModifierFlags = [.command, .option, .control]
             if !cocoa.intersection(nonShiftModifiers).isEmpty {
-                let carbon = ModifierTranslator.carbonFlags(from: cocoa)
-                prefs.setHotKey(keyCode: UInt32(event.keyCode), carbonModifiers: carbon)
+                prefs.setHotKey(HotKey(keyCode: UInt32(event.keyCode),
+                                       cocoaModifiers: cocoa))
                 stop()
                 return nil
             }

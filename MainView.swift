@@ -7,7 +7,7 @@ import Cocoa
 struct MainView: View {
 
     @ObservedObject var prefs = PreferencesStore.shared
-    @State private var axTrusted = AccessibilityHelper.shared.isTrusted
+    @State private var trustState = AccessibilityHelper.shared.refreshTrustState()
     @State private var axPollTimer: Timer?
     @State private var launchAtLoginToggle: Bool = LaunchAtLoginManager.isEnabled
 
@@ -71,23 +71,8 @@ struct MainView: View {
 
     // MARK: - Permission status
 
-    /// Three banner states:
-    ///   • `granted`  — green, AX permission is live, app is ready.
-    ///   • `staleGrant` — amber-red, "you granted before but TCC lost it after an
-    ///                   update; click ONE button and we'll fix it." This is the
-    ///                   classic ad-hoc-signed update breakage. The single
-    ///                   "Recover Permission" button runs `tccutil reset` + re-prompt.
-    ///   • `freshNeed` — orange, "you haven't granted yet, here's how" — for
-    ///                   first-time users.
-    private enum PermissionState { case granted, staleGrant, freshNeed }
-
-    private var permissionState: PermissionState {
-        if axTrusted { return .granted }
-        return prefs.hasGrantedAXBefore ? .staleGrant : .freshNeed
-    }
-
     @ViewBuilder private var permissionRow: some View {
-        let state = permissionState
+        let state = trustState
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 10) {
                 Image(systemName: bannerIcon(state))
@@ -118,7 +103,7 @@ struct MainView: View {
                     Button(NSLocalizedString("permission.recheck",
                                              value: "Re-check",
                                              comment: "")) {
-                        axTrusted = AccessibilityHelper.shared.isTrusted
+                        trustState = AccessibilityHelper.shared.refreshTrustState()
                     }
                     Spacer()
                 }
@@ -135,7 +120,7 @@ struct MainView: View {
                     Button(NSLocalizedString("permission.recheck",
                                              value: "Re-check",
                                              comment: "")) {
-                        axTrusted = AccessibilityHelper.shared.isTrusted
+                        trustState = AccessibilityHelper.shared.refreshTrustState()
                     }
                     Spacer()
                 }
@@ -149,21 +134,21 @@ struct MainView: View {
         )
     }
 
-    private func bannerIcon(_ s: PermissionState) -> String {
+    private func bannerIcon(_ s: TrustState) -> String {
         switch s {
         case .granted:     return "checkmark.seal.fill"
         case .staleGrant:  return "arrow.triangle.2.circlepath.circle.fill"
         case .freshNeed:   return "exclamationmark.triangle.fill"
         }
     }
-    private func bannerIconColor(_ s: PermissionState) -> Color {
+    private func bannerIconColor(_ s: TrustState) -> Color {
         switch s {
         case .granted:     return .green
         case .staleGrant:  return .orange
         case .freshNeed:   return .orange
         }
     }
-    private func bannerTitle(_ s: PermissionState) -> String {
+    private func bannerTitle(_ s: TrustState) -> String {
         switch s {
         case .granted:
             return NSLocalizedString("permission.granted",
@@ -178,7 +163,7 @@ struct MainView: View {
                                      comment: "")
         }
     }
-    private func bannerSubtitle(_ s: PermissionState) -> String {
+    private func bannerSubtitle(_ s: TrustState) -> String {
         switch s {
         case .granted:
             return String(format: NSLocalizedString("permission.readyHint",
@@ -194,7 +179,7 @@ struct MainView: View {
                                      comment: "")
         }
     }
-    private func bannerBackground(_ s: PermissionState) -> Color {
+    private func bannerBackground(_ s: TrustState) -> Color {
         switch s {
         case .granted:     return Color.green.opacity(0.08)
         case .staleGrant:  return Color.orange.opacity(0.12)
@@ -203,8 +188,7 @@ struct MainView: View {
     }
 
     private var hotkeyLabel: String {
-        ModifierTranslator.symbolicDescription(carbonModifiers: prefs.hotKeyCarbonModifiers,
-                                               keyCode: prefs.hotKeyKeyCode)
+        prefs.hotKey.symbolicDescription
     }
 
     // MARK: - Hotkey
@@ -342,16 +326,10 @@ struct MainView: View {
 
     private func startAXPolling() {
         axPollTimer?.invalidate()
-        // Initial sticky-bit prime: if AX is already granted at window open,
-        // record that we *have* been trusted in the past.
-        if AccessibilityHelper.shared.isTrusted { prefs.hasGrantedAXBefore = true }
+        trustState = AccessibilityHelper.shared.refreshTrustState()
         axPollTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-            let now = AccessibilityHelper.shared.isTrusted
-            if now != axTrusted { axTrusted = now }
-            // Sticky bit — once we observe a granted state, flag it forever so
-            // future stale-grant cases can be detected and recovered without
-            // the user having to know what `tccutil` is.
-            if now { prefs.hasGrantedAXBefore = true }
+            let state = AccessibilityHelper.shared.refreshTrustState()
+            if state != trustState { trustState = state }
         }
     }
 

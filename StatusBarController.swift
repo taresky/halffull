@@ -76,9 +76,7 @@ final class StatusBarController: NSObject {
         let convertTitle = String(format: NSLocalizedString("menu.convert",
                                                             value: "Convert (%@)",
                                                             comment: ""),
-                                  ModifierTranslator.symbolicDescription(
-                                    carbonModifiers: prefs.hotKeyCarbonModifiers,
-                                    keyCode: prefs.hotKeyKeyCode))
+                                  prefs.hotKey.symbolicDescription)
         let convert = NSMenuItem(title: convertTitle,
                                  action: #selector(convertPreferred),
                                  keyEquivalent: "")
