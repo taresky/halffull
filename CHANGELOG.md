@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.4] - 2026-07-09
+
+- Under the hood: collapse focused-field edit into a deep `EditableField`
+  module (AX write + clipboard fallback hidden behind one seam).
+- Under the hood: pure `ConversionPolicy` routes trust + field outcome to a
+  user-feedback plan; `ConversionController` is now an imperative shell only.
+- Under the hood: `HotKey` value type and shared `TrustState` derivation —
+  fewer paired parameters, one place for the stale-grant rule.
+- No intentional user-facing behavior change.
+
 ## [0.1.3] - 2026-07-02
 
 - New **Show in menu bar** setting (default on). Uncheck it to hide the
