@@ -32,6 +32,8 @@
 		8A12345601234567A0000051 /* LaunchReason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000051 /* LaunchReason.swift */; };
 		8A12345601234567A0000052 /* LaunchReasonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000052 /* LaunchReasonTests.swift */; };
 		8A12345601234567A0000053 /* TrustStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000053 /* TrustStateTests.swift */; };
+		8A12345601234567A0000054 /* ConversionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000054 /* ConversionPolicy.swift */; };
+		8A12345601234567A0000055 /* ConversionPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000055 /* ConversionPolicyTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,8 @@
 		8A1234560123456700000051 /* LaunchReason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchReason.swift; sourceTree = "<group>"; };
 		8A1234560123456700000052 /* LaunchReasonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchReasonTests.swift; sourceTree = "<group>"; };
 		8A1234560123456700000053 /* TrustStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustStateTests.swift; sourceTree = "<group>"; };
+		8A1234560123456700000054 /* ConversionPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionPolicy.swift; sourceTree = "<group>"; };
+		8A1234560123456700000055 /* ConversionPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionPolicyTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				8A1234560123456700000023 /* ConversionEngine.swift */,
+				8A1234560123456700000054 /* ConversionPolicy.swift */,
 				8A1234560123456700000024 /* KeyCode.swift */,
 				8A1234560123456700000025 /* KeyboardSimulator.swift */,
 				8A1234560123456700000026 /* PasteboardArbiter.swift */,
@@ -187,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				8A1234560123456700000050 /* ConversionEngineTests.swift */,
+				8A1234560123456700000055 /* ConversionPolicyTests.swift */,
 				8A1234560123456700000052 /* LaunchReasonTests.swift */,
 				8A1234560123456700000053 /* TrustStateTests.swift */,
 			);
@@ -296,6 +302,7 @@
 				8A12345601234567A0000021 /* StatusBarController.swift in Sources */,
 				8A12345601234567A0000022 /* ConversionController.swift in Sources */,
 				8A12345601234567A0000023 /* ConversionEngine.swift in Sources */,
+				8A12345601234567A0000054 /* ConversionPolicy.swift in Sources */,
 				8A12345601234567A0000024 /* KeyCode.swift in Sources */,
 				8A12345601234567A0000025 /* KeyboardSimulator.swift in Sources */,
 				8A12345601234567A0000026 /* PasteboardArbiter.swift in Sources */,
@@ -319,6 +326,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A12345601234567A0000050 /* ConversionEngineTests.swift in Sources */,
+				8A12345601234567A0000055 /* ConversionPolicyTests.swift in Sources */,
 				8A12345601234567A0000052 /* LaunchReasonTests.swift in Sources */,
 				8A12345601234567A0000053 /* TrustStateTests.swift in Sources */,
 			);

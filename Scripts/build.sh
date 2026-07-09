@@ -35,6 +35,7 @@ SWIFT_SOURCES=(
     AccessibilityHelper.swift
     ConversionController.swift
     ConversionEngine.swift
+    ConversionPolicy.swift
     EditableField.swift
     FocusInspector.swift
     halfFullApp.swift

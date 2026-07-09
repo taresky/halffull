@@ -1,10 +1,11 @@
 import Cocoa
 
-/// Coordinates a single conversion request.
+/// Imperative shell for a conversion request.
 ///
-/// This stays deliberately thin: permission belongs here because it drives the
-/// user-facing prompt, text rewriting belongs to `EditableField`, and character
-/// conversion belongs to `ConversionEngine`.
+/// Builds the pure transform, checks trust, asks `EditableField` to rewrite,
+/// then runs the `ConversionPolicy` plan (notifications / success sound /
+/// permission prompt). Routing rules live in the policy; this type only wires
+/// effects.
 final class ConversionController {
 
     static let shared = ConversionController()
@@ -21,7 +22,7 @@ final class ConversionController {
         let direction = directionOverride ?? prefs.conversionDirection
         let scope = scopeOverride ?? prefs.conversionScope
 
-        // Build the closure once so both paths convert with identical settings.
+        // Build the closure once so both edit paths convert with identical settings.
         let convert: (String) -> String = { text in
             ConversionEngine.convert(
                 text,
@@ -31,14 +32,9 @@ final class ConversionController {
             )
         }
 
-        // ── 1. Scope guard ──────────────────────────────────────────────────
+        // ── Gate: no Accessibility → plan is requireTrust; never touch the field ──
         guard AccessibilityHelper.shared.isTrusted else {
-            AccessibilityHelper.shared.ensureTrustedPrompt()
-            NotificationPresenter.shared.notify(
-                title: NSLocalizedString("notify.permissionTitle",
-                                         value: "Accessibility permission required", comment: ""),
-                body: NSLocalizedString("notify.permissionBody",
-                                        value: "Grant access in System Settings → Privacy & Security → Accessibility.", comment: ""))
+            execute(ConversionPolicy.plan(.untrusted))
             return
         }
 
@@ -46,30 +42,57 @@ final class ConversionController {
             convert,
             options: EditableField.Options(restoreClipboard: prefs.restoreClipboard)
         )
+        execute(ConversionPolicy.plan(.edited(Self.fieldResult(outcome))))
+    }
 
-        switch outcome {
+    // MARK: - Shell: perform the plan
+
+    private func execute(_ plan: ConversionPolicy.Plan) {
+        switch plan {
+        case .requireTrust:
+            AccessibilityHelper.shared.ensureTrustedPrompt()
+            NotificationPresenter.shared.notify(
+                title: NSLocalizedString("notify.permissionTitle",
+                                         value: "Accessibility permission required", comment: ""),
+                body: NSLocalizedString("notify.permissionBody",
+                                        value: "Grant access in System Settings → Privacy & Security → Accessibility.", comment: ""))
+
         case .applied:
             playSuccessSoundIfEnabled()
+
         case .noChange:
             NotificationPresenter.shared.notify(
                 title: NSLocalizedString("notify.noChangeTitle",
                                          value: "Nothing changed", comment: ""),
                 body: NSLocalizedString("notify.noChangeBody",
                                         value: "Text already matches the target form.", comment: ""))
+
         case .notFocused:
             NotificationPresenter.shared.notify(
                 title: NSLocalizedString("notify.noFocusTitle",
                                          value: "No text field in focus", comment: ""),
                 body: NSLocalizedString("notify.noFocusBody",
                                         value: "Click into a text field, then try again.", comment: ""))
+
         case .unreadable:
             NotificationPresenter.shared.notify(
                 title: NSLocalizedString("notify.nothingTitle",
                                          value: "Nothing to convert", comment: ""),
                 body: NSLocalizedString("notify.nothingBody",
                                         value: "Couldn't read the focused field. Try selecting the text manually.", comment: ""))
-        case .busy:
+
+        case .silent:
             return
+        }
+    }
+
+    private static func fieldResult(_ outcome: EditableField.Outcome) -> ConversionPolicy.FieldResult {
+        switch outcome {
+        case .applied:    return .applied
+        case .noChange:   return .noChange
+        case .notFocused: return .notFocused
+        case .unreadable: return .unreadable
+        case .busy:       return .busy
         }
     }
 

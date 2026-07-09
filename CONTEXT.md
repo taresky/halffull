@@ -29,9 +29,15 @@ Accessibility write (some Electron / Java / web inputs): synthetic ⌘A/⌘C,
 `changeCount` verification, ⌘V, then restore of the user's clipboard. An
 implementation detail of `EditableField`, never exposed to callers.
 
-**Outcome** — the caller-visible result of a conversion: `applied`, `noChange`,
-`notFocused`, `unreadable`, or `busy`. The controller maps each to a
-notification or the success sound.
+**Outcome** — what happened to the focused field after a rewrite attempt:
+`applied`, `noChange`, `notFocused`, `unreadable`, or `busy`. Produced by
+`EditableField`; never carries AX-vs-clipboard mechanism detail.
+
+**ConversionPolicy** — pure routing from a conversion **attempt** (untrusted, or
+trusted + field outcome) to a **Plan** (`requireTrust`, `applied`, `noChange`,
+`notFocused`, `unreadable`, `silent`). No AppKit, no singletons — the plan is
+data. `ConversionController` is the imperative shell that executes it
+(permission prompt, notifications, success sound).
 
 **HotKey** — the user's global hotkey binding: virtual key code plus Carbon
 modifier bits as one value. Formatting and Cocoa/Carbon modifier conversion
