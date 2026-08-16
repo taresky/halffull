@@ -32,7 +32,9 @@ mkdir -p "$MACOS" "$RESOURCES"
 echo "▸ Compiling Swift sources…"
 SDK="$(xcrun --sdk macosx --show-sdk-path)"
 SWIFT_SOURCES=(
+    ActionFeedback.swift
     AccessibilityHelper.swift
+    ClipboardPlainifier.swift
     ConversionController.swift
     ConversionEngine.swift
     ConversionPolicy.swift
@@ -49,8 +51,12 @@ SWIFT_SOURCES=(
     MainView.swift
     NotificationPresenter.swift
     PasteboardArbiter.swift
+    PlainClipCommand.swift
+    PlainClipController.swift
+    PlainTextCleaner.swift
     PreferencesStore.swift
     StatusBarController.swift
+    TargetMode.swift
     WindowControllers.swift
 )
 # Universal build: compile separately for arm64 and x86_64, then lipo-merge.
@@ -126,6 +132,11 @@ rm -rf "$APP_DIR"
 mv "$CLEAN_APP" "$APP_DIR"
 rmdir "$BUILD_DIR/.clean" 2>/dev/null || true
 
+# Finder/Codex may immediately reattach FinderInfo while the bundle is visible
+# in the workspace. Strip all extended attributes once more immediately before
+# signing; `codesign --strict` rejects even otherwise harmless Finder metadata.
+find "$APP_DIR" -exec xattr -c {} +
+
 echo "▸ Ad-hoc codesigning…"
 # The hardened runtime is enabled in the Xcode project too; mirror it here.
 codesign \
@@ -139,7 +150,7 @@ codesign \
 echo
 echo "✓ Built $APP_DIR"
 echo
-codesign --verify --verbose=2 "$APP_DIR" 2>&1 | sed 's/^/  /'
+codesign --verify --strict --verbose=2 "$APP_DIR" 2>&1 | sed 's/^/  /'
 echo
 echo "Install with:   cp -R \"$APP_DIR\" /Applications/"
 echo "Launch with:    open \"$APP_DIR\""

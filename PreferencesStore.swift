@@ -23,8 +23,22 @@ final class PreferencesStore: ObservableObject {
     private enum Key {
         static let hotKeyKeyCode = "hotKey.keyCode"
         static let hotKeyCarbonModifiers = "hotKey.carbonModifiers"
+        static let clipboardHotKeyKeyCode = "hotKey.clipboard.keyCode"
+        static let clipboardHotKeyCarbonModifiers = "hotKey.clipboard.carbonModifiers"
         static let conversionDirection = "conversion.direction"
         static let conversionScope = "conversion.scope"
+        static let plainClipTrimTrailingLineWhitespace = "plainClip.trimTrailingLineWhitespace"
+        static let plainClipTrimLeadingLineWhitespace = "plainClip.trimLeadingLineWhitespace"
+        static let plainClipTrimWholeString = "plainClip.trimWholeString"
+        static let plainClipRemoveInvisibleCharacters = "plainClip.removeInvisibleCharacters"
+        static let plainClipRemoveLineBreaks = "plainClip.removeLineBreaks"
+        static let plainClipRemoveBlankLines = "plainClip.removeBlankLines"
+        static let plainClipCollapseSpaces = "plainClip.collapseSpaces"
+        static let plainClipReplaceTabs = "plainClip.replaceTabs"
+        static let plainClipConvertToASCII = "plainClip.convertToASCII"
+        static let plainClipStraightenQuotes = "plainClip.straightenQuotes"
+        static let plainClipNormalizeUnicode = "plainClip.normalizeUnicode"
+        static let plainClipPasteAfterCleaning = "plainClip.pasteAfterCleaning"
         static let restoreClipboard = "behavior.restoreClipboard"
         static let convertSpaceToIdeographic = "behavior.convertSpaceToIdeographic"
         static let playSoundOnSuccess = "behavior.playSoundOnSuccess"
@@ -42,8 +56,22 @@ final class PreferencesStore: ObservableObject {
         defaults.register(defaults: [
             Key.hotKeyKeyCode: HotKey.defaultBinding.keyCode,
             Key.hotKeyCarbonModifiers: HotKey.defaultBinding.carbonModifiers,
+            Key.clipboardHotKeyKeyCode: TargetMode.clipboard.defaultHotKey.keyCode,
+            Key.clipboardHotKeyCarbonModifiers: TargetMode.clipboard.defaultHotKey.carbonModifiers,
             Key.conversionDirection: ConversionDirection.smart.rawValue,
             Key.conversionScope: ConversionScope.all.rawValue,
+            Key.plainClipTrimTrailingLineWhitespace: false,
+            Key.plainClipTrimLeadingLineWhitespace: false,
+            Key.plainClipTrimWholeString: false,
+            Key.plainClipRemoveInvisibleCharacters: false,
+            Key.plainClipRemoveLineBreaks: false,
+            Key.plainClipRemoveBlankLines: false,
+            Key.plainClipCollapseSpaces: false,
+            Key.plainClipReplaceTabs: false,
+            Key.plainClipConvertToASCII: false,
+            Key.plainClipStraightenQuotes: false,
+            Key.plainClipNormalizeUnicode: false,
+            Key.plainClipPasteAfterCleaning: false,
             Key.restoreClipboard: true,
             Key.convertSpaceToIdeographic: true,
             Key.playSoundOnSuccess: false,
@@ -53,6 +81,21 @@ final class PreferencesStore: ObservableObject {
             Key.hasCompletedOnboarding: false,
             Key.hasGrantedAXBefore: false,
         ])
+
+        // Migration guard: an existing halfFull user may already have chosen
+        // Option-A for focused text before the clipboard target existed. Keep
+        // their binding and give the new target a non-conflicting fallback.
+        let focused = hotKey
+        let clipboard = hotKey(for: .clipboard)
+        if focused == clipboard {
+            let fallback = HotKey(
+                keyCode: UInt32(kVK_ANSI_A),
+                carbonModifiers: UInt32(optionKey | shiftKey)
+            )
+            defaults.set(Int(fallback.keyCode), forKey: Key.clipboardHotKeyKeyCode)
+            defaults.set(Int(fallback.carbonModifiers),
+                         forKey: Key.clipboardHotKeyCarbonModifiers)
+        }
     }
 
     // MARK: - Hotkey
@@ -64,16 +107,46 @@ final class PreferencesStore: ObservableObject {
             HotKey(keyCode: UInt32(defaults.integer(forKey: Key.hotKeyKeyCode)),
                    carbonModifiers: UInt32(defaults.integer(forKey: Key.hotKeyCarbonModifiers)))
         }
-        set { setHotKey(newValue) }
+        set { _ = setHotKey(newValue) }
     }
 
     /// Atomic setter — writes both axes, fires `objectWillChange` and
     /// `hotKeyChangedNotification` exactly once.
-    func setHotKey(_ hotKey: HotKey) {
+    @discardableResult
+    func setHotKey(_ hotKey: HotKey) -> Bool {
+        setHotKey(hotKey, for: .focusedText)
+    }
+
+    func hotKey(for mode: TargetMode) -> HotKey {
+        switch mode {
+        case .focusedText:
+            return hotKey
+        case .clipboard:
+            return HotKey(
+                keyCode: UInt32(defaults.integer(forKey: Key.clipboardHotKeyKeyCode)),
+                carbonModifiers: UInt32(defaults.integer(forKey: Key.clipboardHotKeyCarbonModifiers))
+            )
+        }
+    }
+
+    /// Atomic, target-aware setter. The notification carries the changed mode
+    /// so AppKit listeners can update only the corresponding registration.
+    @discardableResult
+    func setHotKey(_ hotKey: HotKey, for mode: TargetMode) -> Bool {
+        let otherMode: TargetMode = mode == .focusedText ? .clipboard : .focusedText
+        guard self.hotKey(for: otherMode) != hotKey else { return false }
+
         objectWillChange.send()
-        defaults.set(Int(hotKey.keyCode),         forKey: Key.hotKeyKeyCode)
-        defaults.set(Int(hotKey.carbonModifiers), forKey: Key.hotKeyCarbonModifiers)
-        NotificationCenter.default.post(name: Self.hotKeyChangedNotification, object: nil)
+        switch mode {
+        case .focusedText:
+            defaults.set(Int(hotKey.keyCode), forKey: Key.hotKeyKeyCode)
+            defaults.set(Int(hotKey.carbonModifiers), forKey: Key.hotKeyCarbonModifiers)
+        case .clipboard:
+            defaults.set(Int(hotKey.keyCode), forKey: Key.clipboardHotKeyKeyCode)
+            defaults.set(Int(hotKey.carbonModifiers), forKey: Key.clipboardHotKeyCarbonModifiers)
+        }
+        NotificationCenter.default.post(name: Self.hotKeyChangedNotification, object: mode)
+        return true
     }
 
     // MARK: - Conversion
@@ -88,6 +161,60 @@ final class PreferencesStore: ObservableObject {
 
     @Pref(Key.conversionScope, fallback: .all)
     var conversionScope: ConversionScope
+
+    // MARK: - Plain Clip
+
+    @Pref(Key.plainClipTrimTrailingLineWhitespace)
+    var plainClipTrimTrailingLineWhitespace: Bool
+
+    @Pref(Key.plainClipTrimLeadingLineWhitespace)
+    var plainClipTrimLeadingLineWhitespace: Bool
+
+    @Pref(Key.plainClipTrimWholeString)
+    var plainClipTrimWholeString: Bool
+
+    @Pref(Key.plainClipRemoveInvisibleCharacters)
+    var plainClipRemoveInvisibleCharacters: Bool
+
+    @Pref(Key.plainClipRemoveLineBreaks)
+    var plainClipRemoveLineBreaks: Bool
+
+    @Pref(Key.plainClipRemoveBlankLines)
+    var plainClipRemoveBlankLines: Bool
+
+    @Pref(Key.plainClipCollapseSpaces)
+    var plainClipCollapseSpaces: Bool
+
+    @Pref(Key.plainClipReplaceTabs)
+    var plainClipReplaceTabs: Bool
+
+    @Pref(Key.plainClipConvertToASCII)
+    var plainClipConvertToASCII: Bool
+
+    @Pref(Key.plainClipStraightenQuotes)
+    var plainClipStraightenQuotes: Bool
+
+    @Pref(Key.plainClipNormalizeUnicode)
+    var plainClipNormalizeUnicode: Bool
+
+    @Pref(Key.plainClipPasteAfterCleaning)
+    var plainClipPasteAfterCleaning: Bool
+
+    var plainClipOptions: PlainTextCleaner.Options {
+        PlainTextCleaner.Options(
+            trimTrailingLineWhitespace: plainClipTrimTrailingLineWhitespace,
+            trimLeadingLineWhitespace: plainClipTrimLeadingLineWhitespace,
+            trimWholeString: plainClipTrimWholeString,
+            removeInvisibleCharacters: plainClipRemoveInvisibleCharacters,
+            removeLineBreaks: plainClipRemoveLineBreaks,
+            removeBlankLines: plainClipRemoveBlankLines,
+            collapseSpaces: plainClipCollapseSpaces,
+            replaceTabs: plainClipReplaceTabs,
+            convertToASCII: plainClipConvertToASCII,
+            straightenQuotes: plainClipStraightenQuotes,
+            normalizeUnicode: plainClipNormalizeUnicode
+        )
+    }
 
     // MARK: - Behavior toggles
 

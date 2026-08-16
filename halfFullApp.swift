@@ -13,7 +13,7 @@ import ServiceManagement
 final class HalfFullMain {
     static func main() {
         let app = NSApplication.shared
-        let delegate = AppDelegate()
+        let delegate = AppDelegate(launchCommand: PlainClipCommand.parse(CommandLine.arguments))
         app.delegate = delegate
         app.run()
     }
@@ -23,6 +23,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
     private var statusBar: StatusBarController!
     private var mainWindowController: MainWindowController?
+    private let launchCommand: PlainClipCommand?
+
+    init(launchCommand: PlainClipCommand? = nil) {
+        self.launchCommand = launchCommand
+        super.init()
+    }
 
     // We explicitly switched to .regular to show a window — used to suppress the
     // launch-to-convert path on subsequent activations (kept for compatibility
@@ -32,6 +38,24 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     // MARK: - NSApplicationDelegate
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        // CLI work is deliberately performed by this short-lived process, even
+        // when the resident app is running. Distributed notifications cannot
+        // authenticate their sender, so they must never become a route to use
+        // halfFull's trusted PostEvent permission for `-v` keyboard injection.
+        // This path also avoids all window, status-item, and hotkey startup cost.
+        if let launchCommand {
+            NSApp.setActivationPolicy(.accessory)
+            DispatchQueue.main.async {
+                PlainClipController.shared.trigger(
+                    optionsOverride: launchCommand.options,
+                    pasteAfterCleaning: launchCommand.pasteAfterCleaning
+                ) {
+                    NSApp.terminate(nil)
+                }
+            }
+            return
+        }
+
         // Intentionally NOT requesting notification authorization here —
         // a fresh install shouldn't pop any system dialogs except the
         // Accessibility one (which the user must grant for the hotkey to
@@ -50,7 +74,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             openAbout:      { [weak self] in self?.showMainWindow(selectingAboutTab: true) }
         )
 
-        registerHotKey()
+        registerHotKeys()
         observeHotKeyChanges()
 
         if shouldOpenMainWindowOnLaunch() {
@@ -182,16 +206,33 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
     // MARK: - Hotkey
 
-    private func registerHotKey() {
-        HotKeyManager.shared.register(PreferencesStore.shared.hotKey) {
-            ConversionController.shared.trigger()
+    private func registerHotKeys() {
+        registerHotKey(for: .focusedText)
+        registerHotKey(for: .clipboard)
+    }
+
+    private func registerHotKey(for mode: TargetMode) {
+        let prefs = PreferencesStore.shared
+        switch mode {
+        case .focusedText:
+            HotKeyManager.shared.register(prefs.hotKey(for: mode), for: mode) {
+                ConversionController.shared.trigger()
+            }
+        case .clipboard:
+            HotKeyManager.shared.register(prefs.hotKey(for: mode), for: mode) {
+                PlainClipController.shared.trigger()
+            }
         }
     }
 
     private func observeHotKeyChanges() {
         NotificationCenter.default.addObserver(forName: PreferencesStore.hotKeyChangedNotification,
-                                               object: nil, queue: .main) { [weak self] _ in
-            self?.registerHotKey()
+                                               object: nil, queue: .main) { [weak self] note in
+            if let mode = note.object as? TargetMode {
+                self?.registerHotKey(for: mode)
+            } else {
+                self?.registerHotKeys()
+            }
         }
     }
 

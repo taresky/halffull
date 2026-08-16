@@ -10,31 +10,29 @@ final class HotKeyManager {
 
     static let shared = HotKeyManager()
 
-    private var hotKeyRef: EventHotKeyRef?
+    private var hotKeyRefs: [TargetMode: EventHotKeyRef] = [:]
     private var eventHandler: EventHandlerRef?
-    private var fired: (() -> Void)?
+    private var handlers: [UInt32: () -> Void] = [:]
 
     /// 'FWCv' — distinguishes our hotkey events from other Carbon hotkeys in-process.
     private static let signature: FourCharCode = {
         let chars: [UInt8] = [0x46, 0x57, 0x43, 0x76]  // F W C v
         return chars.reduce(0) { ($0 << 8) | FourCharCode($1) }
     }()
-    private static let id: UInt32 = 1
-
     private init() {}
 
     /// Register (or re-register) the global hotkey.
     /// - Parameters:
     ///   - hotKey: the binding to register (virtual key + Carbon modifier bits).
     ///   - handler: invoked on the main thread when the hotkey fires.
-    func register(_ hotKey: HotKey, handler: @escaping () -> Void) {
-        unregister()
-        self.fired = handler
+    func register(_ hotKey: HotKey, for mode: TargetMode, handler: @escaping () -> Void) {
+        unregister(mode)
+        handlers[mode.hotKeyID] = handler
 
         installHandlerIfNeeded()
 
         var ref: EventHotKeyRef?
-        let hotKeyID = EventHotKeyID(signature: Self.signature, id: Self.id)
+        let hotKeyID = EventHotKeyID(signature: Self.signature, id: mode.hotKeyID)
         let status = RegisterEventHotKey(hotKey.keyCode,
                                          hotKey.carbonModifiers,
                                          hotKeyID,
@@ -42,19 +40,19 @@ final class HotKeyManager {
                                          0,
                                          &ref)
         if status == noErr {
-            self.hotKeyRef = ref
+            hotKeyRefs[mode] = ref
         } else {
-            NSLog("halfFull: RegisterEventHotKey failed (status=\(status))")
+            handlers[mode.hotKeyID] = nil
+            NSLog("halfFull: RegisterEventHotKey failed for \(mode.rawValue) (status=\(status))")
         }
     }
 
-    /// Tear down the hotkey. Safe to call repeatedly.
-    func unregister() {
-        if let ref = hotKeyRef {
+    /// Tear down one target's hotkey. Safe to call repeatedly.
+    func unregister(_ mode: TargetMode) {
+        if let ref = hotKeyRefs.removeValue(forKey: mode) {
             UnregisterEventHotKey(ref)
-            hotKeyRef = nil
         }
-        fired = nil
+        handlers[mode.hotKeyID] = nil
     }
 
     // MARK: - Private
@@ -78,8 +76,8 @@ final class HotKeyManager {
                                         &hotKeyID)
             guard err == noErr else { return err }
             let manager = Unmanaged<HotKeyManager>.fromOpaque(userData).takeUnretainedValue()
-            if hotKeyID.signature == HotKeyManager.signature && hotKeyID.id == HotKeyManager.id {
-                DispatchQueue.main.async { manager.fired?() }
+            if hotKeyID.signature == HotKeyManager.signature {
+                DispatchQueue.main.async { manager.handlers[hotKeyID.id]?() }
             }
             return noErr
         }

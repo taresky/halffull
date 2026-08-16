@@ -2,7 +2,7 @@ import Cocoa
 
 /// Owns the menu-bar `NSStatusItem`. Builds a compact menu with:
 ///   • Show Window   — opens the main UI (settings + quick-convert + hotkey)
-///   • Convert       — fires the hotkey action via menu (for users who forget the binding)
+///   • Convert focused text / clean clipboard
 ///   • Force half→full / full→half
 ///   • About
 ///   • Quit
@@ -54,7 +54,7 @@ final class StatusBarController: NSObject {
             button.title = "Aa"
         }
         button.toolTip = NSLocalizedString("statusbar.tooltip",
-                                           value: "halfFull — switch text width",
+                                           value: "halfFull — transform text and clean the clipboard",
                                            comment: "")
     }
 
@@ -82,6 +82,16 @@ final class StatusBarController: NSObject {
                                  keyEquivalent: "")
         convert.target = self
         menu.addItem(convert)
+
+        let cleanTitle = String(format: NSLocalizedString("menu.cleanClipboard",
+                                                          value: "Clean Clipboard (%@)",
+                                                          comment: ""),
+                                prefs.hotKey(for: .clipboard).symbolicDescription)
+        let clean = NSMenuItem(title: cleanTitle,
+                               action: #selector(cleanClipboard),
+                               keyEquivalent: "")
+        clean.target = self
+        menu.addItem(clean)
 
         let toFull = NSMenuItem(title: NSLocalizedString("menu.forceFullWidth",
                                                          value: "Force half → full-width",
@@ -118,6 +128,7 @@ final class StatusBarController: NSObject {
 
     @objc private func showWindow()        { showMainWindowHandler() }
     @objc private func convertPreferred()  { ConversionController.shared.trigger() }
+    @objc private func cleanClipboard()     { PlainClipController.shared.trigger() }
     @objc private func forceFullWidth()    { ConversionController.shared.trigger(directionOverride: .toFullWidth, scopeOverride: nil) }
     @objc private func forceHalfWidth()    { ConversionController.shared.trigger(directionOverride: .toHalfWidth, scopeOverride: nil) }
     @objc private func openAbout()         { openAboutHandler() }

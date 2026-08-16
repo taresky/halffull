@@ -10,6 +10,7 @@ struct MainView: View {
     @State private var trustState = AccessibilityHelper.shared.refreshTrustState()
     @State private var axPollTimer: Timer?
     @State private var launchAtLoginToggle: Bool = LaunchAtLoginManager.isEnabled
+    @State private var selectedTarget: TargetMode = .focusedText
 
     private let twitterURL = URL(string: "https://x.com/taresky")!
     // Placeholder — replace once the public source URL is decided.
@@ -19,11 +20,16 @@ struct MainView: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
                 hero
-                permissionRow
                 Divider()
+                targetPicker
+                if selectedTarget == .focusedText {
+                    permissionRow
+                }
                 hotkeySection
                 Divider()
-                settingsSection
+                targetSettingsSection
+                Divider()
+                sharedSettingsSection
                 Divider()
                 aboutSection
             }
@@ -61,7 +67,7 @@ struct MainView: View {
                 Text(Bundle.main.appName)
                     .font(.title2).fontWeight(.semibold)
                 Text(NSLocalizedString("hero.tagline",
-                                       value: "Switch text width with one keystroke.",
+                                       value: "Transform focused text or clean the clipboard.",
                                        comment: ""))
                     .font(.callout).foregroundColor(.secondary)
             }
@@ -188,7 +194,25 @@ struct MainView: View {
     }
 
     private var hotkeyLabel: String {
-        prefs.hotKey.symbolicDescription
+        prefs.hotKey(for: .focusedText).symbolicDescription
+    }
+
+    // MARK: - Target
+
+    private var targetPicker: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            sectionHeader(NSLocalizedString("section.target", value: "Target", comment: ""))
+            Picker("", selection: $selectedTarget) {
+                Text(NSLocalizedString("target.focusedText",
+                                       value: "Focused Text", comment: ""))
+                    .tag(TargetMode.focusedText)
+                Text(NSLocalizedString("target.clipboard",
+                                       value: "Clipboard", comment: ""))
+                    .tag(TargetMode.clipboard)
+            }
+            .pickerStyle(.segmented)
+            .labelsHidden()
+        }
     }
 
     // MARK: - Hotkey
@@ -200,15 +224,25 @@ struct MainView: View {
                                    value: "Press the keys you want to bind. Must include ⌘, ⌃, or ⌥.",
                                    comment: ""))
                 .font(.caption).foregroundColor(.secondary)
-            HotKeyRecorderView(prefs: prefs)
+            HotKeyRecorderView(prefs: prefs, mode: selectedTarget)
         }
     }
 
     // MARK: - Settings
 
-    private var settingsSection: some View {
+    @ViewBuilder private var targetSettingsSection: some View {
+        switch selectedTarget {
+        case .focusedText:
+            focusedTextSettingsSection
+        case .clipboard:
+            plainClipSettingsSection
+        }
+    }
+
+    private var focusedTextSettingsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            sectionHeader(NSLocalizedString("section.settings", value: "Settings", comment: ""))
+            sectionHeader(NSLocalizedString("section.focusedTextSettings",
+                                            value: "Focused Text Settings", comment: ""))
 
             row(NSLocalizedString("prefs.direction", value: "Default direction", comment: "")) {
                 Picker("", selection: Binding(get: { prefs.conversionDirection },
@@ -236,6 +270,84 @@ struct MainView: View {
                                      comment: ""),
                    isOn: Binding(get: { prefs.restoreClipboard },
                                  set: { prefs.restoreClipboard = $0 }))
+        }
+    }
+
+    private var plainClipSettingsSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            sectionHeader(NSLocalizedString("section.clipboardSettings",
+                                            value: "Clipboard Settings", comment: ""))
+
+            Text(NSLocalizedString("plainClip.intro",
+                                   value: "Always removes rich formatting. Optional cleanup runs in the order shown.",
+                                   comment: ""))
+                .font(.caption)
+                .foregroundColor(.secondary)
+
+            Toggle(NSLocalizedString("plainClip.trimTrailingLineWhitespace",
+                                     value: "Remove trailing spaces and tabs from lines", comment: ""),
+                   isOn: Binding(get: { prefs.plainClipTrimTrailingLineWhitespace },
+                                 set: { prefs.plainClipTrimTrailingLineWhitespace = $0 }))
+            Toggle(NSLocalizedString("plainClip.trimLeadingLineWhitespace",
+                                     value: "Remove leading spaces and tabs from lines", comment: ""),
+                   isOn: Binding(get: { prefs.plainClipTrimLeadingLineWhitespace },
+                                 set: { prefs.plainClipTrimLeadingLineWhitespace = $0 }))
+            Toggle(NSLocalizedString("plainClip.removeInvisibleCharacters",
+                                     value: "Remove invisible control characters", comment: ""),
+                   isOn: Binding(get: { prefs.plainClipRemoveInvisibleCharacters },
+                                 set: { prefs.plainClipRemoveInvisibleCharacters = $0 }))
+            Toggle(NSLocalizedString("plainClip.removeLineBreaks",
+                                     value: "Remove line breaks", comment: ""),
+                   isOn: Binding(get: { prefs.plainClipRemoveLineBreaks },
+                                 set: { prefs.plainClipRemoveLineBreaks = $0 }))
+            Toggle(NSLocalizedString("plainClip.normalizeUnicode",
+                                     value: "Normalize Unicode (NFC)", comment: ""),
+                   isOn: Binding(get: { prefs.plainClipNormalizeUnicode },
+                                 set: { prefs.plainClipNormalizeUnicode = $0 }))
+            Toggle(NSLocalizedString("plainClip.replaceTabs",
+                                     value: "Replace tabs with spaces", comment: ""),
+                   isOn: Binding(get: { prefs.plainClipReplaceTabs },
+                                 set: { prefs.plainClipReplaceTabs = $0 }))
+            Toggle(NSLocalizedString("plainClip.collapseSpaces",
+                                     value: "Collapse consecutive spaces", comment: ""),
+                   isOn: Binding(get: { prefs.plainClipCollapseSpaces },
+                                 set: { prefs.plainClipCollapseSpaces = $0 }))
+            Toggle(NSLocalizedString("plainClip.removeBlankLines",
+                                     value: "Remove blank lines", comment: ""),
+                   isOn: Binding(get: { prefs.plainClipRemoveBlankLines },
+                                 set: { prefs.plainClipRemoveBlankLines = $0 }))
+            Toggle(NSLocalizedString("plainClip.straightenQuotes",
+                                     value: "Replace smart quotes with straight quotes", comment: ""),
+                   isOn: Binding(get: { prefs.plainClipStraightenQuotes },
+                                 set: { prefs.plainClipStraightenQuotes = $0 }))
+            Toggle(NSLocalizedString("plainClip.convertToASCII",
+                                     value: "Convert lossily to ASCII", comment: ""),
+                   isOn: Binding(get: { prefs.plainClipConvertToASCII },
+                                 set: { prefs.plainClipConvertToASCII = $0 }))
+            Toggle(NSLocalizedString("plainClip.trimWholeString",
+                                     value: "Trim surrounding whitespace", comment: ""),
+                   isOn: Binding(get: { prefs.plainClipTrimWholeString },
+                                 set: { prefs.plainClipTrimWholeString = $0 }))
+
+            Divider()
+
+            Toggle(NSLocalizedString("plainClip.pasteAfterCleaning",
+                                     value: "Paste automatically after cleaning", comment: ""),
+                   isOn: Binding(get: { prefs.plainClipPasteAfterCleaning },
+                                 set: { prefs.plainClipPasteAfterCleaning = $0 }))
+            Text(NSLocalizedString("plainClip.pastePermissionHint",
+                                   value: "macOS may request permission the first time automatic paste is used.",
+                                   comment: ""))
+                .font(.caption)
+                .foregroundColor(.secondary)
+        }
+    }
+
+    private var sharedSettingsSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            sectionHeader(NSLocalizedString("section.appSettings",
+                                            value: "App Settings", comment: ""))
+
             Toggle(NSLocalizedString("prefs.playSound",
                                      value: "Play sound on success",
                                      comment: ""),

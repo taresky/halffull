@@ -1,7 +1,7 @@
 import Cocoa
 import SwiftUI
 
-/// Single visible window. Tabbed: Convert / Settings / Hotkey / About.
+/// Single visible, target-mode settings window.
 /// We use an explicit NSWindowController (rather than the SwiftUI Settings/WindowGroup
 /// scenes) so we keep full control over activation policy and Dock-icon visibility.
 final class MainWindowController: NSWindowController {

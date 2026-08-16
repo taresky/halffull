@@ -1,5 +1,16 @@
 # Changelog
 
+## [Unreleased]
+
+- New target-mode settings: the existing focused-text converter remains on
+  `⌥F`, while a fully independent clipboard cleaner defaults to `⌥A`.
+- Clipboard cleaning strips rich formatting and supports all legacy Plain Clip
+  transforms: per-line/whole-text trimming, invisible characters, line breaks,
+  blank lines, spaces, tabs, lossy ASCII, straight quotes, and Unicode NFC.
+- Optional clean-and-paste, multi-item clipboard preservation, change-count
+  race protection, and a no-text alert without destructive clipboard writes.
+- Plain Clip-compatible one-shot CLI flags:
+  `-w -l -m -i -r -b -s -p -a -q -n -v` (or `--plain-clip`).
 ## [0.1.5] - 2026-07-09
 
 - Under the hood: `@Pref` property wrapper folds the PreferencesStore

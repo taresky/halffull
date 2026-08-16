@@ -8,46 +8,61 @@ import Carbon.HIToolbox
 /// the host text field never sees it.
 struct HotKeyRecorderView: View {
     @ObservedObject var prefs: PreferencesStore
+    let mode: TargetMode
     @State private var recording = false
     @State private var monitor: Any?
+    @State private var conflictMessage: String?
     // Cleanup when the Preferences window resigns key. macOS SwiftUI TabView keeps
     // sibling tabs alive (no onDisappear when switching to a sibling), so we'd otherwise
     // leave the monitor installed and swallow ⌘W / ⌘, / etc.
     @State private var resignObserver: NSObjectProtocol?
 
     var body: some View {
-        HStack(spacing: 12) {
-            Text(currentLabel)
-                .font(.system(.body, design: .monospaced))
-                .frame(minWidth: 140, alignment: .leading)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 8)
-                .background(
-                    RoundedRectangle(cornerRadius: 6)
-                        .strokeBorder(recording ? Color.accentColor : Color.secondary.opacity(0.4),
-                                      lineWidth: recording ? 2 : 1)
-                )
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 12) {
+                Text(currentLabel)
+                    .font(.system(.body, design: .monospaced))
+                    .frame(minWidth: 140, alignment: .leading)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .background(
+                        RoundedRectangle(cornerRadius: 6)
+                            .strokeBorder(recording ? Color.accentColor : Color.secondary.opacity(0.4),
+                                          lineWidth: recording ? 2 : 1)
+                    )
 
-            Button(recording
-                   ? NSLocalizedString("hotkey.recordingButton", value: "Press a key…", comment: "")
-                   : NSLocalizedString("hotkey.recordButton",    value: "Record", comment: "")) {
-                if recording { stop() } else { start() }
+                Button(recording
+                       ? NSLocalizedString("hotkey.recordingButton", value: "Press a key…", comment: "")
+                       : NSLocalizedString("hotkey.recordButton",    value: "Record", comment: "")) {
+                    if recording { stop() } else { start() }
+                }
+                .keyboardShortcut(.defaultAction)
+
+                Button(NSLocalizedString("hotkey.reset", value: "Reset", comment: "")) {
+                    save(mode.defaultHotKey)
+                }
             }
-            .keyboardShortcut(.defaultAction)
 
-            Button(NSLocalizedString("hotkey.reset", value: "Reset", comment: "")) {
-                prefs.setHotKey(.defaultBinding)
+            if let conflictMessage {
+                Text(conflictMessage)
+                    .font(.caption)
+                    .foregroundColor(.red)
             }
         }
         .onAppear { startResignObserver() }
+        .onChange(of: mode) { _ in
+            conflictMessage = nil
+            stop()
+        }
         .onDisappear { stop(); stopResignObserver() }
     }
 
     private var currentLabel: String {
-        prefs.hotKey.symbolicDescription
+        prefs.hotKey(for: mode).symbolicDescription
     }
 
     private func start() {
+        conflictMessage = nil
         recording = true
         // .keyDown only. We require at least one non-shift modifier so the recorder
         // can't capture plain letters — that would brick the user's typing.
@@ -58,8 +73,7 @@ struct HotKeyRecorderView: View {
             let cocoa = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
             let nonShiftModifiers: NSEvent.ModifierFlags = [.command, .option, .control]
             if !cocoa.intersection(nonShiftModifiers).isEmpty {
-                prefs.setHotKey(HotKey(keyCode: UInt32(event.keyCode),
-                                       cocoaModifiers: cocoa))
+                save(HotKey(keyCode: UInt32(event.keyCode), cocoaModifiers: cocoa))
                 stop()
                 return nil
             }
@@ -69,6 +83,19 @@ struct HotKeyRecorderView: View {
                 return nil
             }
             return event
+        }
+    }
+
+    private func save(_ hotKey: HotKey) {
+        if prefs.setHotKey(hotKey, for: mode) {
+            conflictMessage = nil
+        } else {
+            conflictMessage = NSLocalizedString(
+                "hotkey.conflict",
+                value: "That shortcut is already used by the other target.",
+                comment: ""
+            )
+            NSSound.beep()
         }
     }
 

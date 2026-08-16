@@ -51,6 +51,13 @@
         "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "录制" } }
       }
     },
+    "hotkey.conflict" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "That shortcut is already used by the other target." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "这个快捷键已被另一个目标模式使用。" } }
+      }
+    },
     "hotkey.recordingButton" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -331,6 +338,230 @@
         "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "快捷键" } }
       }
     },
+    "hero.tagline" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Transform focused text or clean the clipboard." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "转换聚焦文本，或清理剪贴板。" } }
+      }
+    },
+    "menu.cleanClipboard" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Clean Clipboard (%@)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "清理剪贴板（%@）" } }
+      }
+    },
+    "plainClip.collapseSpaces" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Collapse consecutive spaces" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "合并连续空格" } }
+      }
+    },
+    "plainClip.convertToASCII" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Convert lossily to ASCII" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "有损转换为 ASCII" } }
+      }
+    },
+    "plainClip.intro" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Always removes rich formatting. Optional cleanup runs in the order shown." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "始终移除富文本格式；可选清理按以下顺序执行。" } }
+      }
+    },
+    "plainClip.normalizeUnicode" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Normalize Unicode (NFC)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "规范化 Unicode（NFC）" } }
+      }
+    },
+    "plainClip.notify.changed.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Newer clipboard content was left untouched." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "新的剪贴板内容已原样保留。" } }
+      }
+    },
+    "plainClip.notify.changed.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Clipboard changed" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "剪贴板已变化" } }
+      }
+    },
+    "plainClip.notify.noText.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Copy some text, then try again." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "请先复制一些文本，然后重试。" } }
+      }
+    },
+    "plainClip.notify.noText.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "No text on the clipboard" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "剪贴板中没有文本" } }
+      }
+    },
+    "plainClip.notify.pastePermission.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Allow input control to paste automatically." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "请允许输入控制，以便自动粘贴。" } }
+      }
+    },
+    "plainClip.notify.pastePermission.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Clipboard cleaned" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "剪贴板已清理" } }
+      }
+    },
+    "plainClip.notify.writeFailed.body" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "The pasteboard rejected the cleaned text." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "系统剪贴板拒绝写入清理后的文本。" } }
+      }
+    },
+    "plainClip.notify.writeFailed.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Couldn't clean the clipboard" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "无法清理剪贴板" } }
+      }
+    },
+    "plainClip.pasteAfterCleaning" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Paste automatically after cleaning" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "清理后自动粘贴" } }
+      }
+    },
+    "plainClip.pastePermissionHint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "macOS may request permission the first time automatic paste is used." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "首次使用自动粘贴时，macOS 可能会请求权限。" } }
+      }
+    },
+    "plainClip.removeBlankLines" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Remove blank lines" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "移除空白行" } }
+      }
+    },
+    "plainClip.removeInvisibleCharacters" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Remove invisible control characters" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "移除不可见控制字符" } }
+      }
+    },
+    "plainClip.removeLineBreaks" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Remove line breaks" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "移除换行符" } }
+      }
+    },
+    "plainClip.replaceTabs" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Replace tabs with spaces" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "用空格替换制表符" } }
+      }
+    },
+    "plainClip.straightenQuotes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Replace smart quotes with straight quotes" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "把弯引号替换为直引号" } }
+      }
+    },
+    "plainClip.trimLeadingLineWhitespace" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Remove leading spaces and tabs from lines" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "移除每行开头的空格和制表符" } }
+      }
+    },
+    "plainClip.trimTrailingLineWhitespace" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Remove trailing spaces and tabs from lines" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "移除每行末尾的空格和制表符" } }
+      }
+    },
+    "plainClip.trimWholeString" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Trim surrounding whitespace" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "移除文本两端空白" } }
+      }
+    },
+    "section.appSettings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "App Settings" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "应用设置" } }
+      }
+    },
+    "section.about" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "About" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "关于" } }
+      }
+    },
+    "section.clipboardSettings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Clipboard Settings" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "剪贴板设置" } }
+      }
+    },
+    "section.focusedTextSettings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Focused Text Settings" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "聚焦文本设置" } }
+      }
+    },
+    "section.hotkey" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Hotkey" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "快捷键" } }
+      }
+    },
+    "section.target" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Target" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "目标模式" } }
+      }
+    },
+    "target.clipboard" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Clipboard" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "剪贴板" } }
+      }
+    },
+    "target.focusedText" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Focused Text" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "聚焦文本" } }
+      }
+    },
     "scope.all" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -355,8 +586,8 @@
     "statusbar.tooltip" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "halfFull — convert text width" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "halfFull — 切换文本宽度" } }
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "halfFull — transform text and clean the clipboard" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "halfFull — 转换文本并清理剪贴板" } }
       }
     },
     "window.about" : {

@@ -34,6 +34,15 @@
 		8A12345601234567A0000053 /* TrustStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000053 /* TrustStateTests.swift */; };
 		8A12345601234567A0000054 /* ConversionPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000054 /* ConversionPolicy.swift */; };
 		8A12345601234567A0000055 /* ConversionPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000055 /* ConversionPolicyTests.swift */; };
+		8A12345601234567A0000060 /* ActionFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000060 /* ActionFeedback.swift */; };
+		8A12345601234567A0000061 /* ClipboardPlainifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000061 /* ClipboardPlainifier.swift */; };
+		8A12345601234567A0000062 /* PlainTextCleaner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000062 /* PlainTextCleaner.swift */; };
+		8A12345601234567A0000063 /* PlainClipCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000063 /* PlainClipCommand.swift */; };
+		8A12345601234567A0000064 /* PlainClipController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000064 /* PlainClipController.swift */; };
+		8A12345601234567A0000065 /* TargetMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000065 /* TargetMode.swift */; };
+		8A12345601234567A0000066 /* TargetModeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000066 /* TargetModeTests.swift */; };
+		8A12345601234567A0000067 /* PlainTextCleanerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000067 /* PlainTextCleanerTests.swift */; };
+		8A12345601234567A0000068 /* ClipboardPlainifierTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1234560123456700000068 /* ClipboardPlainifierTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +87,15 @@
 		8A1234560123456700000053 /* TrustStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustStateTests.swift; sourceTree = "<group>"; };
 		8A1234560123456700000054 /* ConversionPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionPolicy.swift; sourceTree = "<group>"; };
 		8A1234560123456700000055 /* ConversionPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionPolicyTests.swift; sourceTree = "<group>"; };
+		8A1234560123456700000060 /* ActionFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionFeedback.swift; sourceTree = "<group>"; };
+		8A1234560123456700000061 /* ClipboardPlainifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardPlainifier.swift; sourceTree = "<group>"; };
+		8A1234560123456700000062 /* PlainTextCleaner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainTextCleaner.swift; sourceTree = "<group>"; };
+		8A1234560123456700000063 /* PlainClipCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainClipCommand.swift; sourceTree = "<group>"; };
+		8A1234560123456700000064 /* PlainClipController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainClipController.swift; sourceTree = "<group>"; };
+		8A1234560123456700000065 /* TargetMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetMode.swift; sourceTree = "<group>"; };
+		8A1234560123456700000066 /* TargetModeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetModeTests.swift; sourceTree = "<group>"; };
+		8A1234560123456700000067 /* PlainTextCleanerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainTextCleanerTests.swift; sourceTree = "<group>"; };
+		8A1234560123456700000068 /* ClipboardPlainifierTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardPlainifierTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +153,9 @@
 				8A1234560123456700000020 /* halfFullApp.swift */,
 				8A1234560123456700000021 /* StatusBarController.swift */,
 				8A1234560123456700000022 /* ConversionController.swift */,
+				8A1234560123456700000064 /* PlainClipController.swift */,
+				8A1234560123456700000063 /* PlainClipCommand.swift */,
+				8A1234560123456700000060 /* ActionFeedback.swift */,
 			);
 			name = App;
 			sourceTree = "<group>";
@@ -144,6 +165,9 @@
 			children = (
 				8A1234560123456700000023 /* ConversionEngine.swift */,
 				8A1234560123456700000054 /* ConversionPolicy.swift */,
+				8A1234560123456700000062 /* PlainTextCleaner.swift */,
+				8A1234560123456700000061 /* ClipboardPlainifier.swift */,
+				8A1234560123456700000065 /* TargetMode.swift */,
 				8A1234560123456700000024 /* KeyCode.swift */,
 				8A1234560123456700000025 /* KeyboardSimulator.swift */,
 				8A1234560123456700000026 /* PasteboardArbiter.swift */,
@@ -195,6 +219,9 @@
 				8A1234560123456700000055 /* ConversionPolicyTests.swift */,
 				8A1234560123456700000052 /* LaunchReasonTests.swift */,
 				8A1234560123456700000053 /* TrustStateTests.swift */,
+				8A1234560123456700000066 /* TargetModeTests.swift */,
+				8A1234560123456700000067 /* PlainTextCleanerTests.swift */,
+				8A1234560123456700000068 /* ClipboardPlainifierTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -301,8 +328,14 @@
 				8A12345601234567A0000020 /* halfFullApp.swift in Sources */,
 				8A12345601234567A0000021 /* StatusBarController.swift in Sources */,
 				8A12345601234567A0000022 /* ConversionController.swift in Sources */,
+				8A12345601234567A0000064 /* PlainClipController.swift in Sources */,
+				8A12345601234567A0000063 /* PlainClipCommand.swift in Sources */,
+				8A12345601234567A0000060 /* ActionFeedback.swift in Sources */,
 				8A12345601234567A0000023 /* ConversionEngine.swift in Sources */,
 				8A12345601234567A0000054 /* ConversionPolicy.swift in Sources */,
+				8A12345601234567A0000062 /* PlainTextCleaner.swift in Sources */,
+				8A12345601234567A0000061 /* ClipboardPlainifier.swift in Sources */,
+				8A12345601234567A0000065 /* TargetMode.swift in Sources */,
 				8A12345601234567A0000024 /* KeyCode.swift in Sources */,
 				8A12345601234567A0000025 /* KeyboardSimulator.swift in Sources */,
 				8A12345601234567A0000026 /* PasteboardArbiter.swift in Sources */,
@@ -329,6 +362,9 @@
 				8A12345601234567A0000055 /* ConversionPolicyTests.swift in Sources */,
 				8A12345601234567A0000052 /* LaunchReasonTests.swift in Sources */,
 				8A12345601234567A0000053 /* TrustStateTests.swift in Sources */,
+				8A12345601234567A0000066 /* TargetModeTests.swift in Sources */,
+				8A12345601234567A0000067 /* PlainTextCleanerTests.swift in Sources */,
+				8A12345601234567A0000068 /* ClipboardPlainifierTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -58,7 +58,7 @@ final class ConversionController {
                                         value: "Grant access in System Settings → Privacy & Security → Accessibility.", comment: ""))
 
         case .applied:
-            playSuccessSoundIfEnabled()
+            ActionFeedback.playSuccessSoundIfEnabled()
 
         case .noChange:
             NotificationPresenter.shared.notify(
@@ -96,18 +96,4 @@ final class ConversionController {
         }
     }
 
-    private func playSuccessSoundIfEnabled() {
-        guard PreferencesStore.shared.playSoundOnSuccess else { return }
-        Self.successSound?.play()
-    }
-
-    /// Long-lived NSSound reference. Created once and held by the singleton so
-    /// the audio engine isn't yanked out from under itself the instant the
-    /// `.play()` call returns — the v3.x bug where the user heard nothing despite
-    /// the toggle being on was an inline `NSSound(named:)?.play()` whose object
-    /// went out of scope before playback even started.
-    private static let successSound: NSSound? = {
-        let s = NSSound(named: NSSound.Name("Pop"))
-        return s
-    }()
 }
