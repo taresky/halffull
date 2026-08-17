@@ -81,6 +81,37 @@ final class PlainTextCleanerTests: XCTestCase {
         )
     }
 
+    func testASCIIConversionPreservesUnsupportedScriptsInsteadOfQuestionMarks() {
+        XCTAssertEqual(
+            PlainTextCleaner.clean(
+                "Ubuntu LTS（长期支持版） café 🙂",
+                options: .init(convertToASCII: true)
+            ),
+            "Ubuntu LTS（长期支持版） cafe 🙂"
+        )
+    }
+
+    func testAllCleanupOptionsPreserveMultilingualText() {
+        let options = PlainTextCleaner.Options(
+            trimTrailingLineWhitespace: true,
+            trimLeadingLineWhitespace: true,
+            trimWholeString: true,
+            removeInvisibleCharacters: true,
+            removeLineBreaks: true,
+            removeBlankLines: true,
+            collapseSpaces: true,
+            replaceTabs: true,
+            convertToASCII: true,
+            straightenQuotes: true,
+            normalizeUnicode: true
+        )
+
+        XCTAssertEqual(
+            PlainTextCleaner.clean("  Ubuntu LTS （长期支持版）\t“café”  \n", options: options),
+            "Ubuntu LTS （长期支持版） \"cafe\""
+        )
+    }
+
     func testUnicodeNormalizationRunsBeforeASCIIConversion() {
         XCTAssertEqual(
             PlainTextCleaner.clean(

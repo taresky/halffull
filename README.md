@@ -28,7 +28,7 @@ change its hotkey or enable any combination of:
 - per-line leading/trailing whitespace removal, whole-text trimming;
 - invisible-character, line-break, or blank-line removal;
 - smart-quote replacement, consecutive-space collapsing, and tab replacement;
-- lossy ASCII conversion and Unicode NFC normalization;
+- safe ASCII transliteration (unsupported scripts are preserved) and Unicode NFC normalization;
 - automatic paste after cleaning (off by default).
 
 No clipboard monitoring or history is used. For legacy automation, run the app
@@ -59,7 +59,8 @@ The landing page (`docs/`) is separately released into the [public domain (CC0)]
    <kbd>⌥</kbd><kbd>A</kbd>，再粘贴纯文本。
 
 在设置中选择「剪贴板」，可以修改快捷键，并配置行首/行尾空白、不可见字符、
-换行和空白行、智能引号、连续空格、制表符、ASCII、Unicode NFC，以及清理后自动粘贴。
+换行和空白行、智能引号、连续空格、制表符、安全 ASCII 转写（保留中文等其他文字）、
+Unicode NFC，以及清理后自动粘贴。
 应用不会监控剪贴板，也不会保存剪贴板历史。
 
 > 首次启动会被 macOS Gatekeeper 拦截（ad-hoc 签名）。在终端跑一次 `xattr -d com.apple.quarantine /Applications/halfFull.app`，或走「系统设置 → 隐私与安全 → 仍要打开」流程。详见 [release notes](https://github.com/taresky/halffull/releases/latest)。
@@ -84,7 +85,7 @@ The landing page (`docs/`) is separately released into the [public domain (CC0)]
 3. テキストフィールドで <kbd>⌥</kbd><kbd>F</kbd>、またはリッチテキストを
    コピーした後に <kbd>⌥</kbd><kbd>A</kbd> を押します。
 
-設定の「Clipboard」では、空白・不可視文字・改行・引用符・ASCII・Unicode NFC
+設定の「Clipboard」では、空白・不可視文字・改行・引用符・安全な ASCII 変換・Unicode NFC
 などのクリーニングと、クリーニング後の自動ペーストを設定できます。
 クリップボードの監視や履歴保存は行いません。
 

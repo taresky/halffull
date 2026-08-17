@@ -109,17 +109,7 @@ enum PlainTextCleaner {
         }
 
         if options.convertToASCII {
-            result = result.unicodeScalars.reduce(into: "") { output, scalar in
-                if let replacement = Self.legacyASCIIReplacements[scalar] {
-                    output.append(replacement)
-                } else {
-                    output.unicodeScalars.append(scalar)
-                }
-            }
-            if let data = result.data(using: .ascii, allowLossyConversion: true),
-               let ascii = String(data: data, encoding: .ascii) {
-                result = ascii
-            }
+            result = Self.convertSupportedCharactersToASCII(result)
         }
 
         if options.trimWholeString {
@@ -149,4 +139,37 @@ enum PlainTextCleaner {
         "ä": "ae", "ö": "oe", "ü": "ue", "ß": "ss",
         "æ": "ae", "œ": "oe", "•": "*", "·": "*"
     ]
+
+    /// Applies Plain Clip's useful ASCII transliterations without replacing
+    /// unsupported writing systems, emoji, or symbols with question marks.
+    /// Foundation's whole-string lossy conversion does exactly that destructive
+    /// replacement, so conversion is attempted one extended grapheme at a time.
+    private static func convertSupportedCharactersToASCII(_ text: String) -> String {
+        let legacyMapped = text.unicodeScalars.reduce(into: "") { output, scalar in
+            if let replacement = Self.legacyASCIIReplacements[scalar] {
+                output.append(replacement)
+            } else {
+                output.unicodeScalars.append(scalar)
+            }
+        }
+
+        return legacyMapped.reduce(into: "") { output, character in
+            let source = String(character)
+
+            if source.unicodeScalars.allSatisfy({ $0.value < 0x80 }) {
+                output.append(source)
+                return
+            }
+
+            guard let data = source.data(using: .ascii, allowLossyConversion: true),
+                  let ascii = String(data: data, encoding: .ascii),
+                  !ascii.isEmpty,
+                  !ascii.contains("?") else {
+                output.append(source)
+                return
+            }
+
+            output.append(ascii)
+        }
+    }
 }

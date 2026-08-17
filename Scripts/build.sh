@@ -119,25 +119,26 @@ rm -rf "$ICONSET"
 echo "▸ Copying String Catalog source (English-only runtime; localized at Xcode build time)…"
 cp Localizable.xcstrings "$RESOURCES/" || true
 
-echo "▸ Re-copying bundle via ditto to strip Finder/resource detritus…"
+echo "▸ Preparing bundle for signing outside the File Provider workspace…"
 # macOS attaches `com.apple.FinderInfo` to anything it touches in Finder, and
 # `com.apple.provenance` to bash-written files. codesign rejects both with
 # "resource fork, Finder information, or similar detritus not allowed."
-# Standard mitigation: ditto copy with --norsrc --noextattr --noacl, then sign.
-CLEAN_APP="$BUILD_DIR/.clean/halfFull.app"
-rm -rf "$BUILD_DIR/.clean"
-mkdir -p "$BUILD_DIR/.clean"
-ditto --norsrc --noextattr --noacl "$APP_DIR" "$CLEAN_APP"
-rm -rf "$APP_DIR"
-mv "$CLEAN_APP" "$APP_DIR"
-rmdir "$BUILD_DIR/.clean" 2>/dev/null || true
+# The Documents directory may be managed by File Provider, which can reattach
+# those attributes between xattr and codesign. Sign and verify in a system temp
+# directory, then copy the already-signed bundle back without extended attrs.
+SIGNING_DIR="$(mktemp -d -t halffull-sign)"
+SIGNING_APP="$SIGNING_DIR/halfFull.app"
+cleanup_signing_dir() {
+    rm -rf "$SIGNING_DIR"
+}
+trap cleanup_signing_dir EXIT
 
-# Finder/Codex may immediately reattach FinderInfo while the bundle is visible
-# in the workspace. Strip all extended attributes once more immediately before
-# signing; `codesign --strict` rejects even otherwise harmless Finder metadata.
-find "$APP_DIR" -exec xattr -c {} +
+ditto --norsrc --noextattr --noacl "$APP_DIR" "$SIGNING_APP"
 
 echo "▸ Ad-hoc codesigning…"
+# Strip any source attributes that ditto could not omit.
+find "$SIGNING_APP" -depth -exec xattr -c {} +
+
 # The hardened runtime is enabled in the Xcode project too; mirror it here.
 codesign \
     --sign - \
@@ -145,12 +146,29 @@ codesign \
     --deep \
     --options runtime \
     --entitlements halfFull.entitlements \
-    "$APP_DIR"
+    "$SIGNING_APP"
+
+if ! SIGNING_VERIFICATION="$(codesign --verify --strict --verbose=2 "$SIGNING_APP" 2>&1)"; then
+    printf '%s\n' "$SIGNING_VERIFICATION" >&2
+    exit 1
+fi
+
+rm -rf "$APP_DIR"
+ditto --norsrc --noextattr --noacl "$SIGNING_APP" "$APP_DIR"
+
+# These workspace attributes are not part of the signature. Clear them as the
+# final filesystem operation; the identical temporary bundle was strictly
+# verified immediately after signing.
+find "$APP_DIR" -depth -exec xattr -c {} +
+xattr -c "$APP_DIR"
+
+cleanup_signing_dir
+trap - EXIT
 
 echo
 echo "✓ Built $APP_DIR"
 echo
-codesign --verify --strict --verbose=2 "$APP_DIR" 2>&1 | sed 's/^/  /'
+echo "  Strict signature verified before copying into the File Provider workspace."
 echo
 echo "Install with:   cp -R \"$APP_DIR\" /Applications/"
 echo "Launch with:    open \"$APP_DIR\""

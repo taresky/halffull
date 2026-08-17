@@ -51,7 +51,7 @@ All cleaning options default to off, matching Plain Clip's documented defaults:
 - Remove blank lines (`-b`).
 - Replace consecutive ASCII spaces with one space (`-s`).
 - Replace tabs with spaces (`-p`).
-- Convert lossily to ASCII (`-a`).
+- Convert supported characters to ASCII while preserving unsupported scripts (`-a`).
 - Replace smart single/double quotes with straight quotes (`-q`).
 - Normalize Unicode to NFC (`-n`).
 

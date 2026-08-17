@@ -111,6 +111,29 @@ check("lossy ASCII conversion keeps legacy transliterations",
                              options: .init(convertToASCII: true)),
       "AeOeUeaeoeuessaeoe--**")
 
+check("ASCII conversion preserves unsupported scripts instead of question marks",
+      PlainTextCleaner.clean("Ubuntu LTS（长期支持版） café 🙂",
+                             options: .init(convertToASCII: true)),
+      "Ubuntu LTS（长期支持版） cafe 🙂")
+
+let allOptions = PlainTextCleaner.Options(
+    trimTrailingLineWhitespace: true,
+    trimLeadingLineWhitespace: true,
+    trimWholeString: true,
+    removeInvisibleCharacters: true,
+    removeLineBreaks: true,
+    removeBlankLines: true,
+    collapseSpaces: true,
+    replaceTabs: true,
+    convertToASCII: true,
+    straightenQuotes: true,
+    normalizeUnicode: true
+)
+check("all cleanup options preserve multilingual text",
+      PlainTextCleaner.clean("  Ubuntu LTS （长期支持版）\t“café”  \n",
+                             options: allOptions),
+      "Ubuntu LTS （长期支持版） \"cafe\"")
+
 check("Unicode normalization runs before lossy ASCII conversion",
       PlainTextCleaner.clean("A\u{0308}",
                              options: .init(convertToASCII: true, normalizeUnicode: true)),

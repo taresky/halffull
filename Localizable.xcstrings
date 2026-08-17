@@ -362,8 +362,8 @@
     "plainClip.convertToASCII" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Convert lossily to ASCII" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "有损转换为 ASCII" } }
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Convert supported characters to ASCII (preserve others)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "将可转写字符转为 ASCII（保留其他文字）" } }
       }
     },
     "plainClip.intro" : {

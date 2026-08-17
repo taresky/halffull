@@ -321,7 +321,8 @@ struct MainView: View {
                    isOn: Binding(get: { prefs.plainClipStraightenQuotes },
                                  set: { prefs.plainClipStraightenQuotes = $0 }))
             Toggle(NSLocalizedString("plainClip.convertToASCII",
-                                     value: "Convert lossily to ASCII", comment: ""),
+                                     value: "Convert supported characters to ASCII (preserve others)",
+                                     comment: ""),
                    isOn: Binding(get: { prefs.plainClipConvertToASCII },
                                  set: { prefs.plainClipConvertToASCII = $0 }))
             Toggle(NSLocalizedString("plainClip.trimWholeString",
