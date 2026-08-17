@@ -27,6 +27,12 @@ final class AccessibilityHelper {
     static let shared = AccessibilityHelper()
     private init() {}
 
+    /// Process-local guard: the system sheet should only appear once per
+    /// process, but we also refuse to re-call with `prompt: true` after the
+    /// first attempt — belt-and-braces against hotkey spam if the OS ever
+    /// re-shows the dialog (or if a second halfFull instance is registered).
+    private var didRequestPromptThisProcess = false
+
     /// Silent check — never prompts.
     ///
     /// Uses `AXIsProcessTrustedWithOptions(nil)` rather than `AXIsProcessTrusted()`.
@@ -50,9 +56,15 @@ final class AccessibilityHelper {
     }
 
     /// Prompting check — shows the system "wants to control your computer" sheet
-    /// once. After the user dismisses it, subsequent calls fall through silently.
+    /// at most once per process. After that, subsequent calls only re-check
+    /// silently so hotkey presses never re-pop the sheet.
     @discardableResult
     func ensureTrustedPrompt() -> Bool {
+        if isTrusted { return true }
+        if didRequestPromptThisProcess {
+            return isTrusted
+        }
+        didRequestPromptThisProcess = true
         let key = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as NSString
         let opts: NSDictionary = [key: true]
         return AXIsProcessTrustedWithOptions(opts)
@@ -111,16 +123,25 @@ final class AccessibilityHelper {
     /// Relaunch ourselves. Used by the in-app "Quit & Relaunch" button when the
     /// user has just granted Accessibility but macOS's TCC cache for the running
     /// process is stale — a fresh process always reads the fresh value.
+    ///
+    /// **Do not use `open -n`.** That forces a second instance while this one is
+    /// still alive; combined with the single-instance handoff in
+    /// `AppDelegate`, the new process would see us still running, hand off, and
+    /// quit — leaving nothing. Instead: schedule a delayed `open` (no `-n`) and
+    /// terminate ourselves first so the relaunch is the only live process.
     func relaunchSelf() {
-        guard let bundlePath = Bundle.main.bundleURL.path as NSString? else { NSApp.terminate(nil); return }
+        let bundlePath = Bundle.main.bundleURL.path
+        let escaped = bundlePath.replacingOccurrences(of: "'", with: "'\\''")
         let task = Process()
-        task.launchPath = "/usr/bin/open"
-        task.arguments = ["-n", bundlePath as String]
-        try? task.run()
-        // Give launchctl a moment to register the new process before we exit.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            NSApp.terminate(nil)
+        task.executableURL = URL(fileURLWithPath: "/bin/sh")
+        // sleep so our process fully exits before LaunchServices re-opens us.
+        task.arguments = ["-c", "sleep 0.6; /usr/bin/open '\(escaped)'"]
+        do {
+            try task.run()
+        } catch {
+            NSLog("halfFull: relaunch schedule failed — \(error.localizedDescription)")
         }
+        NSApp.terminate(nil)
     }
 
     /// Block-style observer: fires `onTrusted` once permission becomes available.

@@ -38,6 +38,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     // MARK: - NSApplicationDelegate
 
     func applicationDidFinishLaunching(_ notification: Notification) {
+        // Single-instance gate — MUST run before registerHotKey().
+        //
+        // halfFull is often present both as /Applications/halfFull.app and as a
+        // local build/ under the repo. Both share bundle id me.taresky.halffull
+        // and both RegisterEventHotKey the same binding. Carbon delivers the
+        // hotkey to every registrant, so one trusted instance converts while an
+        // untrusted twin pops the Accessibility sheet on every press — exactly
+        // the "works, but keeps asking for permission" symptom.
+        if launchCommand == nil && Self.handoffToExistingInstanceIfAny() {
+            NSApp.terminate(nil)
+            return
+        }
+
         // CLI work is deliberately performed by this short-lived process, even
         // when the resident app is running. Distributed notifications cannot
         // authenticate their sender, so they must never become a route to use
@@ -55,6 +68,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
             }
             return
         }
+
+        observeActivateRequests()
 
         // Intentionally NOT requesting notification authorization here —
         // a fresh install shouldn't pop any system dialogs except the
@@ -97,6 +112,44 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                 AccessibilityHelper.shared.ensureTrustedPrompt()
                 AccessibilityHelper.shared.openAccessibilitySettings()
             }
+        }
+    }
+
+    // MARK: - Single instance
+
+    /// Posted by a second launch that is about to exit, so the surviving
+    /// instance can surface its settings window (Dock re-open doesn't fire
+    /// when the second process is a different on-disk path).
+    private static let activateNotification =
+        Notification.Name("me.taresky.halffull.activateExisting")
+
+    /// If another process with our bundle id is already running, activate it
+    /// and return `true` so the caller can terminate this one.
+    private static func handoffToExistingInstanceIfAny() -> Bool {
+        let bid = Bundle.main.bundleIdentifier ?? "me.taresky.halffull"
+        let others = NSRunningApplication.runningApplications(withBundleIdentifier: bid)
+            .filter { $0.processIdentifier != ProcessInfo.processInfo.processIdentifier
+                      && !$0.isTerminated }
+        guard let other = others.first else { return false }
+
+        DistributedNotificationCenter.default().postNotificationName(
+            activateNotification,
+            object: bid,
+            userInfo: nil,
+            deliverImmediately: true
+        )
+        other.activate(options: [.activateIgnoringOtherApps])
+        return true
+    }
+
+    private func observeActivateRequests() {
+        let bid = Bundle.main.bundleIdentifier ?? "me.taresky.halffull"
+        DistributedNotificationCenter.default().addObserver(
+            forName: Self.activateNotification,
+            object: bid,
+            queue: .main
+        ) { [weak self] _ in
+            self?.showMainWindow()
         }
     }
 

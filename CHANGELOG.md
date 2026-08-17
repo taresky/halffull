@@ -1,16 +1,25 @@
 # Changelog
 
-## [Unreleased]
+## [0.2.0] - 2026-08-17
 
 - New target-mode settings: the existing focused-text converter remains on
   `⌥F`, while a fully independent clipboard cleaner defaults to `⌥A`.
 - Clipboard cleaning strips rich formatting and supports all legacy Plain Clip
   transforms: per-line/whole-text trimming, invisible characters, line breaks,
-  blank lines, spaces, tabs, lossy ASCII, straight quotes, and Unicode NFC.
+  blank lines, spaces, tabs, safe ASCII transliteration, straight quotes, and
+  Unicode NFC. Unsupported scripts such as Chinese remain unchanged instead
+  of becoming question marks.
 - Optional clean-and-paste, multi-item clipboard preservation, change-count
   race protection, and a no-text alert without destructive clipboard writes.
 - Plain Clip-compatible one-shot CLI flags:
   `-w -l -m -i -r -b -s -p -a -q -n -v` (or `--plain-clip`).
+- Fix: stop the Accessibility permission sheet from reappearing on every
+  hotkey press when two halfFull processes were alive at once (e.g.
+  `/Applications/halfFull.app` + a local `build/` copy). Enforce a single
+  instance at launch and relaunch without `open -n`.
+- Defense in depth: only fire the system Accessibility prompt once per
+  process lifetime, even if the hotkey keeps hitting the untrusted path.
+
 ## [0.1.5] - 2026-07-09
 
 - Under the hood: `@Pref` property wrapper folds the PreferencesStore
